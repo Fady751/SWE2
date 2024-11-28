@@ -9,11 +9,7 @@ const port = 3000;
 const host = 'localhost';
 const wss = new WebSocket.Server({ port: 8080 });
 
-// message 
 
-function fun() {
-    
-}
 
 app.listen(port, host, async(err) => {
     if(err) {
