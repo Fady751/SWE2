@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <!-- Left Section -->
+  <div class="navbar-left">
+    <button mat-button class="nav-btn" (click)="navigateTo('call-machine')">Call Machine</button>
+    <button mat-button class="nav-btn" (click)="navigateTo('user-list')">User List</button>
+    <button mat-button class="nav-btn" (click)="navigateTo('machine-list')">Machine List</button>
+    <button mat-button class="nav-btn" (click)="navigateTo('machine-list')">home</button>
+
+  </div>
+
+  <!-- Right Section -->
+  <div class="navbar-right">
+    <!-- If user is logged in -->
+    <div *ngIf="isLoggedIn" class="user-info">
+      <img [src]="user.photo" alt="Profile" class="user-photo" />
+      <span class="user-name">{{ user.name }}</span>
+    </div>
+
+    <!-- If user is not logged in -->
+    <div *ngIf="!isLoggedIn">
+      <button mat-button class="nav-btn" (click)="navigateTo('signin')">Sign In</button>
+      <button mat-button class="nav-btn" (click)="navigateTo('signup')">Sign Up</button>
+    </div>
+  </div>
+</nav>
