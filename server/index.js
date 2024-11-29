@@ -7,7 +7,8 @@ const WebSocket = require('ws');
 const app = express();
 const port = 3000;
 const host = 'localhost';
-const wss = new WebSocket.Server({ port: 8080 });
+const machine = new WebSocket.Server({ port: 8080 }); // add, remove, moved on map(edit)
+const notification = new WebSocket.Server({ port: 8081 });
 
 
 
