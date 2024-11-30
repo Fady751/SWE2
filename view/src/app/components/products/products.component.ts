@@ -16,6 +16,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ProductsComponent {
   counter: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  categories: any[] = ['Plastic', 'Paper', 'Metal', 'Glass', 'Electronics', 'Organic Waste', 'Cloth'];
 
 
   decreaseCounter(i: number) {
@@ -25,6 +26,7 @@ export class ProductsComponent {
   increaseCounter(i: number) {
     this.counter[i]++;
   }
+
   products = [
     {
         "id": 1,
