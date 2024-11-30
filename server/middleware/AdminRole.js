@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('./database'); 
+const { query ,  pool} = require('../config/data_base'); 
 const CheckRole  = async(req , res , next )=>{
     
     const User_id = req.body.id ;
