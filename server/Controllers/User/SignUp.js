@@ -8,9 +8,17 @@ const SignUp = async(req , res)=>{
     const {name , email , gender , password } = req.body ;
     let role = "";
 
-
-    if(!name || !name.length || !email || !email.length || !gender || (gender != "f" && gender != "m") || !password || password.length < 3) {
-        return res.status(401).json({message : "Enter valid data"});
+    if(!name || !name.length) {
+        return res.status(401).json({message : "Enter valid name"});
+    }
+    if(!email || !email.length) {
+        return res.status(401).json({message : "Enter valid email"});
+    }
+    if(!gender || (gender != "f" && gender != "m")) {
+        return res.status(401).json({message : "Enter valid gender"});
+    }
+    if(!password || password.length < 3) {
+        return res.status(401).json({message : "password must be greater than 3"});
     }
 
     try{
