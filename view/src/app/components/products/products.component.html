@@ -1,8 +1,8 @@
 <div class="container">
   <div class="category-selection">
     <label for="category">Choose a Category to Recycle:</label>
-    <select id="category" class="form-control">
-      <option selected disabled>Choose category</option>
+    <select id="category" class="form-control" #idSelect (change)="filter(idSelect.value)">
+      <option selected value="all">All categories</option>
       @for (category of categories; track $index) {
           <option [value]="category">
               {{ category }}
@@ -16,7 +16,7 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
 
 
-  @for (prod of products; track $index) {
+  @for (prod of material; track $index) {
       <div class="card">
           <img [src]="prod.url_photo" alt="Item Image" class="card-image" />
           <div class="card-info">
