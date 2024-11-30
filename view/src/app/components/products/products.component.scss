@@ -77,9 +77,9 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.card-counter button:hover {
-  background-color: #45a049;
-}
+// .card-counter  button:hover {
+//   background-color: yellow;
+// }
 
 .card-counter span {
   margin: 0 15px;
@@ -87,4 +87,98 @@ body {
   color: #333;
   min-width: 30px;
   text-align: center;
+}
+.card-counter .negative{
+  background-color: red;
+
+}
+
+
+.btn {
+  width: 150px;
+  padding: 15px;
+  font-size: 20px;
+}
+
+.btn-left {
+  background-color: #007bff;
+  margin: 30px;
+  color: white;
+  border: none;
+}
+
+.btn-left:hover {
+  background-color: #0056b3;
+}
+
+.btn-right {
+  background-color: #28a745;
+  margin: 30px;
+  color: white;
+  border: none;
+}
+
+.btn-right:hover {
+  background-color: #218838;
+}
+
+
+
+
+
+
+
+
+
+/* Center the container on the page */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Styling for the category selection */
+.category-selection {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Maximum width for the dropdown */
+}
+
+/* Label styling */
+.category-selection label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Dropdown styling */
+.category-selection select.form-control {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Focus effect */
+.category-selection select.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Styling for the default option */
+.category-selection select.form-control option[disabled] {
+  color: #888;
+  font-style: italic;
 }

@@ -1,6 +1,22 @@
+<div class="container">
+  <div class="category-selection">
+    <label for="category">Choose a Category to Recycle:</label>
+    <select id="category" class="form-control" #idSelect (change)="filter(idSelect.value)">
+      <option selected value="all">All categories</option>
+      @for (category of categories; track $index) {
+          <option [value]="category">
+              {{ category }}
+          </option>
+      }
+    </select>
+  </div>
+</div>
+
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
 
-  @for (prod of products; track $index) {
+
+  @for (prod of material; track $index) {
       <div class="card">
           <img [src]="prod.url_photo" alt="Item Image" class="card-image" />
           <div class="card-info">
@@ -9,10 +25,17 @@
           <p>Recycle: {{ prod.recyclable ? 'Yes' : 'No' }}</p>
           </div>
           <div class="card-counter">
-          <button (click)="decreaseCounter($index)">-</button>
+          <button class="negative" (click)="decreaseCounter($index)">-</button>
           <span>{{ counter[$index] }}</span>
-          <button (click)="increaseCounter($index)">+</button>
+          <button class="plus" (click)="increaseCounter($index)">+</button>
           </div>
       </div>
   }
+</div>
+
+
+
+<div class="d-flex justify-content-between mt-4">
+  <button class="btn btn-left">Discard</button>
+  <button class="btn btn-right">Confirm</button>
 </div>
