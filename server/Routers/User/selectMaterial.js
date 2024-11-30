@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const UserControllers = require('../Controllers/UserControllers.js/index.js')
+const SelectMatrial = require('../../Controllers/User/selectMatrial') ;
 const VerifyJWT = require("../middleware/verifyJWT.js");
 
-router.post('/selectMaterial' ,VerifyJWT ,  UserControllers.SelectMatrial) ;
+router.post('/selectMaterial' ,VerifyJWT , SelectMatrial) ;
 
 module.exports = router ;
