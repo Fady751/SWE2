@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
  
   imports: [],
@@ -11,9 +12,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   
 })
 export class SignupComponent {
+  constructor(private route: Router) { }
   onSubmit(): void {
     console.log('Form Submitted!');}
   toggleForm(): void {
     document.querySelector('.wrapper')?.classList.toggle('active');
+  }
+  routeLogin(): void {
+    this.route.navigate(['/login']);
   }
 }
