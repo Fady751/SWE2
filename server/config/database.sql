@@ -6,7 +6,7 @@ CREATE DATABASE wastesorting;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL CHECK (role IN ("Admin", "User")),
+    role VARCHAR(255) NOT NULL CHECK (role IN ('Admin', 'User')),
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     gender CHAR(1) CHECK (gender IN ('f', 'm')),
