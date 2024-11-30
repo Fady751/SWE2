@@ -6,7 +6,7 @@ CREATE DATABASE wastesorting;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL CHECK (role IN ("Admin", "User")),
+    role VARCHAR(255) NOT NULL CHECK (role IN ('Admin', 'User')),
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     gender CHAR(1) CHECK (gender IN ('f', 'm')),
@@ -16,10 +16,10 @@ CREATE TABLE users (
 -- Create the 'machine' table
 CREATE TABLE machine (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     latitude DECIMAL(9, 6) NOT NULL,
     longitude DECIMAL(9, 6) NOT NULL,
-    state VARCHAR(50) CHECK (state IN ('on', 'off', 'maintenance', 'inOrder')) NOT NULL,
+    state VARCHAR(50) DEFAULT 'on' CHECK (state IN ('on', 'off', 'maintenance', 'inOrder')) NOT NULL,
     sorted BOOLEAN DEFAULT FALSE,
     estimatedTime TIME
 );

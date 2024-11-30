@@ -30,8 +30,8 @@ const SignUp = async(req , res)=>{
 
     try{
         const numberOfUser = await query(`select * from users`) ;
-        if(numberOfUser == null || numberOfUser.lenght == 0 ) role = "Admin" ;
-        else role = "User" ; 
+        if(numberOfUser == null || numberOfUser.lenght == 0 ) role = 'Admin' ;
+        else role = 'User' ; 
     }
     catch(err){
         return res.status(500).json({message : err});
