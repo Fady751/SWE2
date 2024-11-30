@@ -2,7 +2,6 @@ const express = require('express');
 const { error } = require('console');
 const bodyParser = require('body-parser');
 const { query ,  pool} = require('../config/data_base'); 
-const bcrypt = require('bcrypt');
 
 app.use(express.json());
 
@@ -16,4 +15,4 @@ const GetAllUsers = async(req , res )=>{
 
 }
 
-module.exports  = GetAllUsers   
+module.exports  = GetAllUsers   ;

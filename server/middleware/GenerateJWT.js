@@ -1,14 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 function generateJWT(payload) {
-    try {
-      const token = jwt.sign(payload, process.env.TOKEN_SECRET);
-      return token;
-    } 
-    catch (err) {
-      return null ;
-    }
-
+  const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '5m' });
+  return token;
 }
 
-module.exports = verifyJWT;
+module.exports = generateJWT;

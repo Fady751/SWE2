@@ -14,8 +14,13 @@ const SignUp = async(req , res)=>{
     const {name , email , gender , password } = req.body ;
     const role = "";
 
-    const found = await query (`select * from users where email = '${email}' and name = '${name}'`);
-    if (found) return res.status(409).json({message : "Already have an account"});
+    try{
+        const found = await query (`select * from users where email like '${email}'`);
+        if (found) return res.status(409).json({message : "Already have an account"});
+    }
+    catch(err){
+        return res.status(500).json({message : err});
+    }
     
     const validData = validationResult(req.body);
     if(!validData) res.status(401).json({message : validData}) ;
@@ -23,16 +28,34 @@ const SignUp = async(req , res)=>{
 
     const hashedPass = await bcrypt.hash(password, 10);
 
-    const numberOfUser = await query(`select * from users`) ;
-    if(numberOfUser == null || numberOfUser.lenght == 0 ) role = "Admin" ;
-    else role = "User" ; 
+    try{
+        const numberOfUser = await query(`select * from users`) ;
+        if(numberOfUser == null || numberOfUser.lenght == 0 ) role = "Admin" ;
+        else role = "User" ; 
+    }
+    catch(err){
+        return res.status(500).json({message : err});
+    }
 
-    await query(`insert into users 
+    try {
+        await query(`insert into users 
         (name , email , gender , role ,password ) 
         values 
-        ('${name}' , '${email}' , '${gender}') , '${role}' , '${password}'`) ;
+        ('${name}' , '${email}' , '${gender}') , '${role}' , '${hashedPass}'`) ;
+    }
+    catch(err){
+        return res.status(500).json({message : err});
+    }
 
-    const token = generatejwt({id : numberOfUser.lenght+1 }) ; 
+     try{
+     const NewUser = await query(`selcet * from users where email like '${email}' and name like '${name}'`);
+    }
+    catch(err){
+        return res.status(500).json({message : err});
+    }
+    
+    const token = generatejwt({id : NewUser[0].id }) ; 
+
     return res.status(200).json({message: "sign up successfully" , token }) ;
 } 
 

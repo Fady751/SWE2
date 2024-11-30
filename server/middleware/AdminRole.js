@@ -2,7 +2,7 @@ const express = require('express');
 const { query ,  pool} = require('../config/data_base'); 
 const CheckRole  = async(req , res , next )=>{
     
-    const User_id = req.body.id ;
+    const User_id = req.user.id ;
     try{
         const user = await query (`select * from users where id = ${User_id} `);
         const Admin  = (user.role == "Admin");
