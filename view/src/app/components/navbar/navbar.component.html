@@ -2,7 +2,18 @@
   <h2>Autonomous Robotic Waste Sorting</h2>
   <div class="toggle-button-row" (click)="toggleSlideOut()">
     <mat-icon></mat-icon>
+
+    <!-- new notfication -->
+
+    @if (login) {
+      <!-- اكتب كود اللي فيه صورته -->
+    }
+    @else {
+      <!-- اكتب كود اللي فيه  -->
+       <!-- login, signup -->
+    }
   </div>
+  
 </div>
 
 <div class="slide-out-panel" [class.slide-out]="isSlideOut">
@@ -10,9 +21,9 @@
     <h3 class="nav">waste sorting</h3>
     <p class="edit-col" (click)="onHome()">Home</p>
     <p class="edit-col" (click)="onHistory()">Prev History</p>
-    <p class="edit-col" (click)="onLogout()">call machine</p>
-    <p class="edit-col" (click)="onLogout()">machine list</p>
-    <p class="edit-col" (click)="onLogout()">user list</p>
+    <p class="edit-col" (click)="onCallMachine()">Call Machine</p>
+    <p class="edit-col" (click)="onMachinesList()">Machines List</p>
+    <p class="edit-col" (click)="onUsersList()">Users List</p>
     <p class="edit-col" (click)="onLogout()">Log Out</p>
   </div>
 </div>
