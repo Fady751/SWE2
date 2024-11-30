@@ -1,9 +1,8 @@
 const express = require('express'); 
 const { error } = require('console');
 const bodyParser = require('body-parser');
-const { query ,  pool} = require('../config/data_base'); 
+const { query ,  pool} = require('../../config/data_base'); 
 
-app.use(express.json());
 
 const AddMachine = async(req , res)=>{
     const {name , latitude , longitude , state } = req.body;

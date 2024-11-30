@@ -1,10 +1,7 @@
 const express = require('express'); 
 const { error } = require('console');
 const bodyParser = require('body-parser');
-const { query ,  pool} = require('../config/data_base'); 
-
-app.use(express.json());
-
+const { query ,  pool} = require('../../config/data_base'); 
 
 const GetAllMaterial = async(req , res) =>{
 
