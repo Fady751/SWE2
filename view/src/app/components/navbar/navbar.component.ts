@@ -1,24 +1,33 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NgIf,],
+  imports: [NgIf,MatIconModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent  {
-  isLoggedIn = false; // Change this based on your authentication logic
-  user = {
-    name: 'Rani Al-Anani', // Replace with dynamic data
-    photo: 'assets/profile.jpg', // Replace with the actual user photo URL
-  };
 
-  navigateTo(route: string): void {
-    // Replace this with your actual routing logic
-    console.log(`Navigate to: ${route}`);
+  isSlideOut = true;
+  constructor(private router: Router){}
+
+  toggleSlideOut(): void {
+    this.isSlideOut = !this.isSlideOut;
   }
-
-
+  onDash(){
+    this.router.navigate(['/budget-planner/dashboard']);
+  }
+  onProfile(){
+    this.router.navigate(['/budget-planner/profile']);
+  }
+  onHistory(){
+    this.router.navigate(['/budget-planner/history']);
+  }
+  onLogout(){
+    this.router.navigate(['/budget-planner/login']);
+  }
 }

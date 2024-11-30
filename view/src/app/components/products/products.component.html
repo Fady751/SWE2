@@ -1,0 +1,18 @@
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+  @for (prod of products; track $index) {
+      <div class="card">
+          <img [src]="prod.url_photo" alt="Item Image" class="card-image" />
+          <div class="card-info">
+          <h3>{{ prod.name }}</h3>
+          <p>{{ prod.categoryname }}</p>
+          <p>Recycle: {{ prod.recyclable ? 'Yes' : 'No' }}</p>
+          </div>
+          <div class="card-counter">
+          <button (click)="decreaseCounter($index)">-</button>
+          <span>{{ counter[$index] }}</span>
+          <button (click)="increaseCounter($index)">+</button>
+          </div>
+      </div>
+  }
+</div>
