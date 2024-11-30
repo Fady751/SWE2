@@ -18,7 +18,7 @@ export class NavbarComponent  {
   toggleSlideOut(): void {
     this.isSlideOut = !this.isSlideOut;
   }
-  onDash(){
+  onHome(){
     this.router.navigate(['/budget-planner/dashboard']);
   }
   onProfile(){

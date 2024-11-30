@@ -1,22 +1,18 @@
 <div class="navbar">
-  <h2>
-      Code Fusion Hub
-  </h2>
-</div>
-
-<div>
+  <h2>Autonomous Robotic Waste Sorting</h2>
   <div class="toggle-button-row" (click)="toggleSlideOut()">
-    <mat-icon>menu</mat-icon>
+    <mat-icon></mat-icon>
   </div>
 </div>
 
-
 <div class="slide-out-panel" [class.slide-out]="isSlideOut">
   <div class="slide-out-content">
-    <h3 class="nav">Budget Planner</h3>
-    <p class="edit-col" (click)="onDash()">Dashboard</p>
-    <p class="edit-col" (click)="onProfile()">Profile</p>
+    <h3 class="nav">waste sorting</h3>
+    <p class="edit-col" (click)="onHome()">Home</p>
     <p class="edit-col" (click)="onHistory()">Prev History</p>
+    <p class="edit-col" (click)="onLogout()">call machine</p>
+    <p class="edit-col" (click)="onLogout()">machine list</p>
+    <p class="edit-col" (click)="onLogout()">user list</p>
     <p class="edit-col" (click)="onLogout()">Log Out</p>
   </div>
 </div>
