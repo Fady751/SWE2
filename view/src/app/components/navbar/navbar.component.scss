@@ -2,13 +2,15 @@
   background: linear-gradient(135deg, #008000, #8bd680);
   padding: 5px 10px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   border-radius: 20px;
   color: #ffffff;
   margin: 10px;
+  flex: 1;
+  flex-wrap: nowrap;
 }
-
+//////////////////////////////////
 .toggle-button-row {
   position: fixed;
   /* top: 20px; */ /* Uncomment if you want to set the vertical position */
@@ -74,4 +76,66 @@ margin-bottom: 30px;
   justify-content: center;
   background-color: #87dc9c;
   font-size: medium;
+}
+//////////////////////////////////
+.profile-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.profile-photo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+//////////////////////////////////
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.notification  img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+}
+  ////////////////////////////////
+.if-not-login {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.if-not-login .nav-btn {
+  font-size: 14px;
+  padding: 8px 16px;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.if-not-login .nav-btn:hover {
+  background-color: #0056b3;
+}
+
+.if-not-login .nav-btn:active {
+  background-color: #004494;
 }

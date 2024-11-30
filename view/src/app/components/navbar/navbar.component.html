@@ -1,17 +1,27 @@
 <div class="navbar">
-  <h2>Autonomous Robotic Waste Sorting</h2>
+  <div class="container">
+    <h2>Autonomous Robotic Waste Sorting</h2>
+
+  </div>
+
+  <div class="notification">
+    <img src="images/not.png" alt="Profile Photo" />
+
+  </div>
+
+  @if (login) {
+    <div class="profile-photo">
+      <img src="images/defProfile.jpg" alt="Profile Photo" />
+    </div>    }
+  @else {
+
+    <div class="if-not-login">
+      <button mat-button class="nav-btn" (click)="1">Sign In</button>
+      <button mat-button class="nav-btn" (click)="1">Sign Up</button>
+    </div>
+      }
+
   <div class="toggle-button-row" (click)="toggleSlideOut()">
-    <mat-icon></mat-icon>
-
-    <!-- new notfication -->
-
-    @if (login) {
-      <!-- اكتب كود اللي فيه صورته -->
-    }
-    @else {
-      <!-- اكتب كود اللي فيه  -->
-       <!-- login, signup -->
-    }
   </div>
 
 </div>
@@ -27,3 +37,5 @@
     <p class="edit-col" (click)="onLogout()">Log Out</p>
   </div>
 </div>
+
+
