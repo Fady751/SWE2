@@ -1,22 +1,30 @@
-<div class="signup-container">
-  <div class="signup-left">
-    <h2>Sign Up! 🎉</h2>
-    <p>Join us and start your journey!</p>
-    <form>
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" placeholder="Your username">
-      
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="test@atheros.ai">
-      
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="******">
-      
-      <label for="confirm-password">Confirm Password</label>
-      <input type="password" id="confirm-password" name="confirm-password" placeholder="******">
-      
-      <button type="submit" class="btn btn-signup">Sign Up</button>
-    </form>
-    <p>Already have an account? <a (click)="routeLogin()">Login Here</a></p>
+<div class="signup-page">
+  <div class="signup-container">
+    <div class="signup-left">
+      <h2>Sign Up! 🎉</h2>
+      <p>Join us and start your journey!</p>
+      <form>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Your username">
+        
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="test@atheros.ai">
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="******">
+        
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="******">
+        
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        
+        <button type="submit" class="btn btn-signup">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="#">Login Here</a></p>
+    </div>
   </div>
 </div>
