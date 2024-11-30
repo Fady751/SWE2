@@ -26,11 +26,18 @@
   z-index: 1001;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
-.toggle-button-row mat-icon {
-  font-size: 24px;
-  color: #008080;
+.toggle-button-row img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
 }
+
+// .toggle-button-row mat-icon {
+//   font-size: 24px;
+//   color: #008080;
+// }
 
 .slide-out-panel {
   position: fixed;
