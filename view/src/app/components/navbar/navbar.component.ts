@@ -34,10 +34,10 @@ export class NavbarComponent  {
     this.router.navigate(['/callMachine']);
   }
   onMachinesList(){
-    this.router.navigate(['/machinesList']);
+    this.router.navigate(['/machinelist']);
   }
   onUsersList(){
-    this.router.navigate(['/usersList']);
+    this.router.navigate(['/userlist']);
   }
   onSignup(){
     this.router.navigate(['/signup']);
