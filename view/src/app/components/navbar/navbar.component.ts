@@ -28,7 +28,7 @@ export class NavbarComponent  {
   }
   onLogout() {
     localStorage.removeItem('WSToken');
-    this.router.navigate(['/login']);
+    window.location.reload();
   }
   onCallMachine(){
     this.router.navigate(['/callMachine']);

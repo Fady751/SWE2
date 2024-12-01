@@ -10,7 +10,7 @@
   <div *ngIf="!editMode">
     <p><strong>Name:</strong> {{ user.name }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Gender:</strong> {{ user.gender }}</p>
+    <p><strong>Gender:</strong> {{ (user.gender === "m"? "male": "female") }}</p>
     <div class="button-container">
       <button class="edit-btn" (click)="toggleEditMode()">Edit Profile</button>
       <button class="history-btn" (click)="viewHistory()">History</button>
