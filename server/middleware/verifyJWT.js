@@ -5,16 +5,15 @@ const TOKEN_SECRET = "3ec5ffef1dd43c135ceb8b78e4a3135a05a982f67a9cca04e4559a84f1
 
 const verifyJWT = async(req, res, next) => {
     const token = req.headers['authorization'] || ['authorization'];
-
     if (!token) return res.status(401).json({ message: 'Token missing' });
 
     jwt.verify(token, TOKEN_SECRET, async(err, user) => {
         if (err) return res.status(403).json({ message: 'Invalid token' });
         
-        const user = await query(`select * from users where id = ${user.id}`);
-        if(!user) return res.status(404).json({message : "user did not login !"});
+        const stored_user = await query(`select * from users where id = ${user.id}`);
+        if(!stored_user) return res.status(404).json({message : "user did not login !"});
 
-        req.user = user[0];
+        req.user = stored_user[0];
 
         next();
     });

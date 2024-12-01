@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,13 +11,19 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './userProfile.component.html',
   styleUrls: ['./userProfile.component.scss']
 })
-export class UserProfileComponent {
-  user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    gender: 'Male',
-    profilePicture: 'images/defProfile.jpg'
-  };
+export class UserProfileComponent implements OnInit {
+  constructor(private route: Router, private userService: UserService) { }
+
+  user: any = null;
+
+  async ngOnInit(): Promise<void> {
+    this.user = await this.userService.getUser();
+    if(!this.user) {
+      alert('please login !');
+      this.route.navigate(['/login']);
+      return;
+    }
+  }
 
   editMode = false;
 
@@ -25,26 +33,14 @@ export class UserProfileComponent {
 
   saveProfile() {
     this.editMode = false;
-    alert('Profile updated successfully!');
+    
   }
   viewHistory() {
-    // Logic for viewing user history
-    console.log("Viewing user history...");
-    // Navigate to another page, open a modal, or display history here
+    
   }
   
 
   onFileSelected(event: Event) {
-    const fileInput = event.target as HTMLInputElement;
-
-    if (fileInput?.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.user.profilePicture = reader.result as string; // Update profile picture
-      };
-      reader.readAsDataURL(file); // Convert file to Base64 string
-    }
+    
   }
 }

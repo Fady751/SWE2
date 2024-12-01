@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/signup', require('./Routers/User/signUp'));
+app.use('/user', require('./Routers/User/getUser'));
 
 
 
