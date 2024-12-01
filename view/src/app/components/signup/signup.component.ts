@@ -72,7 +72,6 @@ export class SignupComponent implements OnInit {
   
       localStorage.setItem('WSToken', responseData.token);
       this.userService.setUser({...data, urlPhoto: ''});
-      this.route.navigate(['/userProfile']);
       window.location.reload();
 
     } catch (error) {
