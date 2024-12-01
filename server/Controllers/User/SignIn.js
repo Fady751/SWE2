@@ -1,7 +1,7 @@
 const express = require('express'); 
 const { error } = require('console');
 const bodyParser = require('body-parser');
-const { query ,  pool} = require('../config/data_base'); 
+const { query ,  pool} = require('../../config/data_base'); 
 const {body , validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const generatejwt = require('../../middleware/GenerateJWT');
@@ -21,7 +21,7 @@ const SignIn = async(req , res )=>{
     catch(err){
         return res.status(500).json({message : err});
     }
-    
+
     const matchPass = await bcrypt.compare(password, user[0].password);
     if(!matchPass) return res.send(404).json({message : "invalid email or password "})
 
