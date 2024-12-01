@@ -4,6 +4,4 @@ import { AppComponent } from './app/app.component';
 import { ProductsComponent } from './app/components/products/products.component';
 
 bootstrapApplication(AppComponent, appConfig  )
-bootstrapApplication(ProductsComponent)
-
-  .catch((err) => console.error(err));
+bootstrapApplication(ProductsComponent) .catch((err) => console.error(err));

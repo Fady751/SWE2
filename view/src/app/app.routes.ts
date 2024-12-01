@@ -5,6 +5,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProductsComponent } from './components/products/products.component';
 import { UserProfileComponent } from './components/userProfile/userProfile.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
+import { MachinelistComponent } from './components/machinelist/machinelist.component';
 
 export const routes: Routes = [
   {path : 'home', component:HomeComponent},
@@ -12,5 +13,6 @@ export const routes: Routes = [
   {path : 'signup', component:SignupComponent},
   {path : 'userProfile', component:UserProfileComponent},
   {path : 'userlist', component:UserlistComponent},
-  {path : 'products', component:ProductsComponent}
+  {path : 'products', component:ProductsComponent},
+  {path : 'machinelist',component: MachinelistComponent}
 ];

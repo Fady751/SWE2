@@ -1,0 +1,28 @@
+<div class="machine-list-container">
+    <h1>Machine List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let machine of machines; let i = index">
+          <td>{{ machine.name }}</td>
+          <td>{{ machine.location }}</td>
+          <td>
+            <button (click)="editMachine(i)" class="icon-btn edit-btn">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button (click)="deleteMachine(i)" class="icon-btn delete-btn">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="add-machine-btn" (click)="addMachine()">Add Machine</button>
+  </div>
+  
