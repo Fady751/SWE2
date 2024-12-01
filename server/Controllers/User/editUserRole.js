@@ -1,9 +1,8 @@
 const express = require('express'); 
 const { error } = require('console');
 const bodyParser = require('body-parser');
-const { query ,  pool} = require('../config/data_base'); 
+const { query ,  pool} = require('../../config/data_base'); 
 
-app.use(express.json());
 
 const EditRole = async(req , res)=>{
 

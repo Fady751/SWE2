@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 @Component({
  
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   selector: 'app-signup',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
@@ -12,9 +14,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.scss']
   
 })
-export class SignupComponent {
-  constructor(private route: Router) { }
-
+export class SignupComponent implements OnInit {
+  constructor(private route: Router, private userService: UserService) {
+    
+  }
+  async ngOnInit(): Promise<void> {
+    const user = await this.userService.getUser();
+    if(user) {
+      this.route.navigate(['/userProfile']);
+      return;
+    }
+  }
   username: string = '';
   email: string = '';
   password: string = '';
@@ -61,8 +71,10 @@ export class SignupComponent {
       }
   
       localStorage.setItem('WSToken', responseData.token);
+      this.userService.setUser({...data, urlPhoto: ''});
       this.route.navigate(['/userProfile']);
-      
+      window.location.reload();
+
     } catch (error) {
       console.error('Error submitting signup data:', error);
     }

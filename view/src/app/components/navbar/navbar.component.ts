@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
@@ -11,11 +11,11 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent  {
+  @Input({required: true}) user: any;
 
   isSlideOut = true;
   notfication = true;
-  login = true;
-  constructor(private router: Router){}
+  constructor(private router: Router) { }
 
   toggleSlideOut(): void {
     this.isSlideOut = !this.isSlideOut;
@@ -23,13 +23,11 @@ export class NavbarComponent  {
   onHome(){
     this.router.navigate(['/home']);
   }
-  onProfile(){
-    this.router.navigate(['/profile']);
-  }
   onHistory(){
     this.router.navigate(['/history']);
   }
-  onLogout(){
+  onLogout() {
+    localStorage.removeItem('WSToken');
     this.router.navigate(['/login']);
   }
   onCallMachine(){
@@ -40,5 +38,14 @@ export class NavbarComponent  {
   }
   onUsersList(){
     this.router.navigate(['/usersList']);
+  }
+  onSignup(){
+    this.router.navigate(['/signup']);
+  }
+  onLogin(){
+    this.router.navigate(['/login']);
+  }
+  onProfile(){
+    this.router.navigate(['/userProfile']);
   }
 }
