@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
     this.user = await this.userService.getUser();
     this.userService.data$.subscribe(async(data) => {
       this.user = await this.userService.getUser();
+      console.log('userService, user =', this.user);
     });
     if(!this.user) {
       this.route.navigate(['/login']);
@@ -36,7 +37,9 @@ export class UserProfileComponent implements OnInit {
 
   err: string = '';
   selectedFile: any;
-  async saveProfile() {
+  async saveProfile(event: Event) {
+    event.preventDefault();
+    let photo = false;
     if(this.selectedFile) {
       const formData = new FormData();
       formData.append('image', this.selectedFile);
@@ -49,17 +52,22 @@ export class UserProfileComponent implements OnInit {
         this.err = 'Failed to upload image';
         return;
       }
+      photo = true;
     }
-    this.editMode = false;
     const name = (document.getElementById('name') as HTMLSelectElement).value;
     const email = (document.getElementById('email') as HTMLSelectElement).value;
 
-    const data = {photoUrl: `/images/profiles/${this.user.id}.jpg`, email, name};
+    let data = {photoUrl: '', email: '', name: ''};
+
+    if(photo) data.photoUrl = `/images/profiles/${this.user.id}.jpg`;
+    if(email != this.user.email) data.email = email;
+    if(name != this.user.name) data.name = name;
     
     const res = await fetch('http://localhost:3000/editProfile', {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `${localStorage.getItem('WSToken')}`
       },
       body: JSON.stringify(data)
     });
@@ -70,6 +78,12 @@ export class UserProfileComponent implements OnInit {
       this.err = d.message;
       return;
     }
+    this.userService.updateApp();
+    if(photo) {
+      location.reload();
+    }
+    this.err = '';
+    this.editMode = false;  
   }
 
   onFileSelected(event: Event): void {
@@ -78,9 +92,8 @@ export class UserProfileComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const originalFile = input.files[0];
   
-      // Ensure the original file is valid before renaming it
       this.selectedFile = new File([originalFile], `${this.user.id}.jpg`, { type: originalFile.type });
-      console.log(this.selectedFile);
+      // console.log(this.selectedFile);
     }
   }
   
