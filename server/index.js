@@ -4,7 +4,7 @@ const {query, pool} = require('./config/data_base');
 const jwt = require('jsonwebtoken');
 const WebSocket = require('ws');
 const cors = require('cors')
-const multer = require('multer')
+// const multer = require('multer')
 
 const app = express();
 const port = 3000;
@@ -15,29 +15,29 @@ const notification = new WebSocket.Server({ port: 8081 });
 app.use(cors());
 app.use(express.json());
 
-app.use('/', require('./Routers/User/editProfile'));
+app.use('/', require('./Routers/Machine/getAllMachines'));
 app.use('/signin', require('./Routers/User/signIn'));
 app.use('/signup', require('./Routers/User/signup'));
 app.use('/user', require('./Routers/User/getUser'));
 app.use('/editProfile', require('./Routers/User/editProfile'));
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, '../view/public/images/profiles');
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${file.originalname}`);
-    },
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, '../view/public/images/profiles');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, `${file.originalname}`);
+//     },
+// });
   
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-app.post('/upload', upload.single('image'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).send('No file uploaded.');
-    }
-    res.send({ message: 'File uploaded successfully', file: req.file });
-});
+// app.post('/upload', upload.single('image'), (req, res) => {
+//     if (!req.file) {
+//         return res.status(400).send('No file uploaded.');
+//     }
+//     res.send({ message: 'File uploaded successfully', file: req.file });
+// });
 
 app.listen(port, host, async(err) => {
     if(err) {

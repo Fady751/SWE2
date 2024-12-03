@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const VerifyJWT = require("../middleware/verifyJWT.js")
-const CheckAdminRole = require('../middleware/AdminRole.js');
+const CheckAdminRole = require('../../middleware/AdminRole.js');
 const GetMachine = require('../../Controllers/Machine/getMachine.js');
+const verifyJWT = require('../../middleware/verifyJWT.js');
 
-router.get('/machine' , CheckAdminRole ,GetMachine) ;
+router.get('/machine' , verifyJWT ,CheckAdminRole ,GetMachine) ;
 
 module.exports = router ;

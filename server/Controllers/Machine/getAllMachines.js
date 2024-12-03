@@ -9,9 +9,9 @@ const GetAllMachines = async(req , res)=>{
     try{
         const Machines = await query(`select * from machine`) ;
         
-        if(!Machines) return res.status(404).json({message :"No machine has been added yet "});
+        if(!Machines[0]) return res.status(404).json({message :"No machine has been added yet "});
 
-        return res.status(404).json({message : Machines});
+        return res.status(404).json({message : "Done" , result : Machines});
     }
     catch(err){
         return res.status(500).json({message : err});
