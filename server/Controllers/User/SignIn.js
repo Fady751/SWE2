@@ -1,34 +1,30 @@
 const express = require('express'); 
-const { error } = require('console');
 const bodyParser = require('body-parser');
-const { query ,  pool} = require('../../config/data_base'); 
-const {body , validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
+const { query ,  pool} = require('../../config/data_base'); 
 const generatejwt = require('../../middleware/GenerateJWT');
-
-app.use(express.json());
 
 const SignIn = async(req , res )=>{
     const {email, password} = req.body ;
     
-    if(!email) return res.send(401).json({message : "email is required "})
-    if(!password) return res.send(401).json({message : "password is required "})
+    if(!email) return res.status(401).json({message : "email is required "})
+    if(!password) return res.status(401).json({message : "password is required "})
     
    try{ 
-        const user = await query(`selcet * from users where email like '${email}'`)
-        if(!user) return res.send(404).json({message : "invalid email or password "});
+        const user = (await query(`select * from users where email like '${email}'`))[0];
+     
+        if(!user) return res.status(404).json({message : "invalid email or password "});
+        
+        const matchPass = await bcrypt.compare(password, user.password);
+        if(!matchPass) return res.status(404).json({message : "invalid email or password "})
+    
+        const token = generatejwt({id: user.id});
+    
+        return res.status(200).json({message:"Singin successfully" , token}) ;
     }
     catch(err){
         return res.status(500).json({message : err});
     }
-
-    const matchPass = await bcrypt.compare(password, user[0].password);
-    if(!matchPass) return res.send(404).json({message : "invalid email or password "})
-
-    const token = generatejwt({id: user[0].id});
-
-    return res.status(200).json({message:"Singin successfully" , token}) ;
-
 
 }
 

@@ -3,6 +3,6 @@ const router = express.Router();
 
 const SignIn = require('../../Controllers/User/SignIn')
 
-router.post( "/signin" , SignIn);
+router.post( "/" , SignIn);
 
 module.exports = router ;

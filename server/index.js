@@ -14,8 +14,10 @@ const notification = new WebSocket.Server({ port: 8081 });
 app.use(cors());
 app.use(express.json());
 
-app.use('/signup', require('./Routers/User/signUp'));
-app.use('/user', require('./Routers/User/getUser'));
+app.use('/', require('./Routers/User/editProfile'));
+
+
+app.use('/signin', require('./Routers/User/signIn'));
 
 
 
