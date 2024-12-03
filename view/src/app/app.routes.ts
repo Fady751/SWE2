@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddmachineComponent } from './components/addmachine/addmachine.component';
 import { EditmachineComponent } from './components/editmachine/editmachine.component';
 import { DetailsmachineComponent } from './components/detailsmachine/detailsmachine.component';
+import { UserdetialsComponent } from './components/userdetials/userdetials.component';
 
 export const routes: Routes = [
   {path : 'home', component:HomeComponent},
@@ -19,6 +20,7 @@ export const routes: Routes = [
   {path : 'userlist', component:UserlistComponent},
   {path : 'products', component:ProductsComponent},
   {path : 'machinelist',component: MachinelistComponent},
+  {path: 'userdetials',component:UserdetialsComponent},
   {path : 'detailsmachine', component:DetailsmachineComponent},
   {path : 'addmachine', component:AddmachineComponent},
   {path : 'editmachine', component:EditmachineComponent},
@@ -27,4 +29,5 @@ export const routes: Routes = [
   {path : 'detailsmachine', component:DetailsmachineComponent},
   {path : 'addmachine', component:AddmachineComponent},
   {path : 'editmachine', component:EditmachineComponent},
+  
 ];

@@ -3,12 +3,14 @@ import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
+import { UserdetialsComponent } from './components/userdetials/userdetials.component';
+
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavbarComponent, RouterOutlet, CommonModule],
+  imports: [NavbarComponent, RouterOutlet, CommonModule,UserdetialsComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
