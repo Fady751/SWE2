@@ -1,30 +1,44 @@
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-userlist',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor,NgIf],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.scss'
 })
 export class UserlistComponent {
   users = [
-    { id: 1, name: 'John Doe', role: 'Admin', photo: 'https://via.placeholder.com/50' },
-    { id: 2, name: 'Jane Smith', role: 'User', photo: 'https://via.placeholder.com/50' },
-    { id: 3, name: 'Sam Wilson', role: 'User', photo: 'https://via.placeholder.com/50' },
+    { id: 1, name: 'John Doe', role: 'Admin', photo: 'https://via.placeholder.com/50', showEditOptions: false },
+    { id: 2, name: 'Jane Smith', role: 'User', photo: 'https://via.placeholder.com/50' , showEditOptions: false},
+    { id: 3, name: 'Sam Wilson', role: 'User', photo: 'https://via.placeholder.com/50', showEditOptions: false },
   ];
 
-  editUser(userId: number): void {
-    alert(`Edit user with ID: ${userId}`);
-  }
 
-  deleteUser(userId: number): void {
-    alert(`Delete user with ID: ${userId}`);
-  }
+    toggleEdit(userId: number) {
+      this.users = this.users.map(user =>
+        user.id === userId
+          ? { ...user, showEditOptions: !user.showEditOptions }
+          : user
+      );
+    }
 
-  viewDetails(userId: number): void {
-    alert(`View details of user with ID: ${userId}`);
-  }
-}
+    assignRole(userId: number, role: string) {
+      this.users = this.users.map(user =>
+        user.id === userId
+          ? { ...user, role, showEditOptions: false }
+          : user
+      );
+      console.log(`Assigned ${role} role to user with ID: ${userId}`);
+    }
 
+    deleteUser(userId: number) {
+      this.users = this.users.filter(user => user.id !== userId);
+      console.log(`Deleted user with ID: ${userId}`);
+    }
+
+    viewDetails(userId: number) {
+      console.log(`Viewing details for user with ID: ${userId}`);
+    }
+  }

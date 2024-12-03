@@ -87,3 +87,31 @@
   transform: translateY(0);
   filter: brightness(0.9);
 }
+
+
+.edit-options {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-options button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #ffc107;
+  color: #000;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.edit-options button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.edit-options button:active {
+  transform: translateY(0);
+  filter: brightness(0.9);
+}
