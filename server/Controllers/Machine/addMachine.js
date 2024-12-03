@@ -20,8 +20,8 @@ const AddMachine = async(req , res)=>{
                 
                 if(state == null){
                     try{
-                    await query(`insert into machine (name , latitude , longitude )
-                    values('${name}' , ${latitude} , ${longitude})`);
+                    await query(`insert into machine (name , latitude , longitude , estimatedTime )
+                    values('${name}' , ${latitude} , ${longitude} , '00:30:00')`);
                     }
                     catch(err){
                         return res.status(500).json({message : err });
@@ -29,8 +29,8 @@ const AddMachine = async(req , res)=>{
                 }
                 else {
                     try{
-                    await query(`insert into machine (name , latitude , longitude , state )
-                        values('${name}' , ${latitude} , ${longitude} , '${state}')`);
+                    await query(`insert into machine (name , latitude , longitude , state  , estimatedTime)
+                        values('${name}' , ${latitude} , ${longitude} , '${state}' , '00:30:00')`);
                     }
                     catch(err){
                         return res.status(500).json({message : err });
