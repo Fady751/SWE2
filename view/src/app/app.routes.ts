@@ -19,6 +19,9 @@ export const routes: Routes = [
   {path : 'userlist', component:UserlistComponent},
   {path : 'products', component:ProductsComponent},
   {path : 'machinelist',component: MachinelistComponent},
+  {path : 'detailsmachine', component:DetailsmachineComponent},
+  {path : 'addmachine', component:AddmachineComponent},
+  {path : 'editmachine', component:EditmachineComponent},
   {path : '', pathMatch: 'full', redirectTo:'home'},
   {path : '**', component:PageNotFoundComponent}
 ];
