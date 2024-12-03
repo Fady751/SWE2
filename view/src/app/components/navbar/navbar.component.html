@@ -15,12 +15,11 @@
     </div>
   }
   @else {
-
     <div class="if-not-login">
       <button mat-button class="nav-btn" (click)="onLogin()"style ="color:black">Sign In</button>
       <button mat-button class="nav-btn" (click)="onSignup()"style ="color:black">Sign Up</button>
     </div>
-      }
+  }
 
   <div class="toggle-button-row" (click)="toggleSlideOut()">
     <img src="images/tl.png" alt="">
@@ -32,11 +31,11 @@
   <div class="slide-out-content">
     <h3 class="nav">waste sorting</h3>
     <p class="edit-col" (click)="onHome()">Home</p>
-    <p class="edit-col" (click)="onHistory()">Prev History</p>
-    <p class="edit-col" (click)="onCallMachine()">Call Machine</p>
+    @if(user) { <p class="edit-col" (click)="onHistory()">Prev History</p> }
+    @if(user && user.role === "Admin") { <p class="edit-col" (click)="onCallMachine()">Call Machine</p>
     <p class="edit-col" (click)="onMachinesList()">Machines List</p>
-    <p class="edit-col" (click)="onUsersList()">Users List</p>
-    <p class="edit-col" (click)="onLogout()">Log Out</p>
+    <p class="edit-col" (click)="onUsersList()">Users List</p> }
+    @if(user) { <p class="edit-col" (click)="onLogout()">Log Out</p> }
   </div>
 </div>
 

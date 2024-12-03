@@ -11,23 +11,22 @@ import { AddmachineComponent } from './components/addmachine/addmachine.componen
 import { EditmachineComponent } from './components/editmachine/editmachine.component';
 import { DetailsmachineComponent } from './components/detailsmachine/detailsmachine.component';
 import { UserdetialsComponent } from './components/userdetials/userdetials.component';
+import { loginAuthGuard } from '../auth/login-auth.guard';
+import { adminAuthGuard } from '../auth/admin-auth.guard';
 
 export const routes: Routes = [
   {path : 'home', component:HomeComponent},
   {path : 'login', component:LoginComponent},
   {path : 'signup', component:SignupComponent},
-  {path : 'userProfile', component:UserProfileComponent},
-  {path : 'userlist', component:UserlistComponent},
-  {path : 'products', component:ProductsComponent},
-  {path : 'machinelist',component: MachinelistComponent},
-  {path: 'userdetials',component:UserdetialsComponent},
-  {path : 'detailsmachine', component:DetailsmachineComponent},
-  {path : 'addmachine', component:AddmachineComponent},
-  {path : 'editmachine', component:EditmachineComponent},
+  {path : 'userProfile', component:UserProfileComponent, canActivate:[loginAuthGuard]},
+  {path : 'userlist', component:UserlistComponent, canActivate:[adminAuthGuard]},
+  {path : 'products', component:ProductsComponent, canActivate:[loginAuthGuard]},
+  {path : 'machinelist',component: MachinelistComponent, canActivate:[adminAuthGuard]},
+  {path: 'userdetials',component:UserdetialsComponent, canActivate:[adminAuthGuard]},
+  {path : 'detailsmachine', component:DetailsmachineComponent, canActivate:[adminAuthGuard]},
+  {path : 'addmachine', component:AddmachineComponent, canActivate:[adminAuthGuard]},
+  {path : 'editmachine', component:EditmachineComponent, canActivate:[adminAuthGuard]},
   {path : '', pathMatch: 'full', redirectTo:'home'},
-  {path : '**', component:PageNotFoundComponent},
-  {path : 'detailsmachine', component:DetailsmachineComponent},
-  {path : 'addmachine', component:AddmachineComponent},
-  {path : 'editmachine', component:EditmachineComponent},
+  {path : '**', component:PageNotFoundComponent}
   
 ];

@@ -11,7 +11,9 @@ interface Machine {
   standalone: true,
   imports: [CommonModule,FormsModule],
   templateUrl: './machinelist.component.html',
-  styleUrl: './machinelist.component.scss'
+  styleUrls: ['./machinelist.component.scss',
+    "../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+  ]
 })
 export class MachinelistComponent {
   machines: Machine[] = [

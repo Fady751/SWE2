@@ -7,7 +7,7 @@ import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, NgIf],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -22,32 +22,41 @@ export class NavbarComponent  {
     this.isSlideOut = !this.isSlideOut;
   }
   onHome(){
+    this.isSlideOut = true;
     this.router.navigate(['/home']);
   }
   onHistory(){
+    this.isSlideOut = true;
     this.router.navigate(['/history']);
   }
   onLogout() {
+    this.isSlideOut = true;
     localStorage.removeItem('WSToken');
     this.userService.updateApp();
     this.router.navigate(['/login']);
   }
   onCallMachine(){
+    this.isSlideOut = true;
     this.router.navigate(['/callMachine']);
   }
   onMachinesList(){
+    this.isSlideOut = true;
     this.router.navigate(['/machinelist']);
   }
   onUsersList(){
+    this.isSlideOut = true;
     this.router.navigate(['/userlist']);
   }
   onSignup(){
+    this.isSlideOut = true;
     this.router.navigate(['/signup']);
   }
   onLogin(){
+    this.isSlideOut = true;
     this.router.navigate(['/login']);
   }
   onProfile(){
+    this.isSlideOut = true;
     this.router.navigate(['/userProfile']);
   }
 }
