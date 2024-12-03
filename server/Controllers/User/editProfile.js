@@ -10,7 +10,7 @@ const EditProfile = async(req , res)=>{
     if(email) {
         try{
             const found = await query(`select name from users where email like '${email}'`);
-            if(found) return res.status(401).json({message : "email is invalid"});
+            if(found[0]) return res.status(401).json({message : "email is invalid"});
 
             try{
                 await query(`UPDATE users SET email = '${email}' WHERE id = ${user.id}`);

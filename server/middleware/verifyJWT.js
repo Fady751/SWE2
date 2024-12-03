@@ -11,7 +11,7 @@ const verifyJWT = async(req, res, next) => {
         if (err) return res.status(403).json({ message: 'Invalid token' });
         
         const stored_user = await query(`select * from users where id = ${user.id}`);
-        if(!stored_user) return res.status(404).json({message : "user did not login !"});
+        if(!stored_user[0]) return res.status(404).json({message : "user did not login !"});
 
         req.user = stored_user[0];
 
