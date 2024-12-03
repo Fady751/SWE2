@@ -19,13 +19,16 @@
 
   <!-- Edit Mode -->
   <div *ngIf="editMode">
+    <p *ngIf="err" class="alert alert-danger text-center rounded p-3 mb-3">
+      <i class="bi bi-exclamation-circle"></i> {{ err }}
+    </p>
     <label>
       Name:
-      <input [(ngModel)]="user.name" />
+      <input id="name" value="{{ user.name }}" />
     </label>
     <label>
       Email:
-      <input [(ngModel)]="user.email" />
+      <input id="email" value="{{ user.email }}" />
     </label>
     
     <label>

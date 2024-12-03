@@ -16,9 +16,7 @@ import { UserService } from '../../../services/user.service';
 })
 
 export class SignupComponent implements OnInit {
-  constructor(private route: Router, private userService: UserService) {
-    
-  }
+  constructor(private route: Router, private userService: UserService) { }
   async ngOnInit(): Promise<void> {
     const user = await this.userService.getUser();
     if(user) {
@@ -72,7 +70,6 @@ export class SignupComponent implements OnInit {
       }
   
       localStorage.setItem('WSToken', responseData.token);
-      this.userService.setUser({urlPhoto: '', ...data});
       this.userService.updateApp();
       this.route.navigateByUrl('userProfile')
 
