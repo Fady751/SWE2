@@ -1,0 +1,26 @@
+<div class="add-machine-container">
+  <h2>Add a New Machine</h2>
+
+  <form [formGroup]="addMachineForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="machineName">Machine Name</label>
+      <input
+        type="text"
+        id="machineName"
+        formControlName="machineName"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="map">Map</label>
+      <!-- ////////////////////////////////////////////////////// -->
+      <div id="map" style="height: 600px; width: 100%;"></div>
+
+      <!-- ////////////////////////////////////////////////////////// -->
+    </div>
+
+    <button class="add-machine-btn" (click)="1">Submit</button>
+
+  </form>
+</div>

@@ -7,6 +7,9 @@ import { UserProfileComponent } from './components/userProfile/userProfile.compo
 import { UserlistComponent } from './components/userlist/userlist.component';
 import { MachinelistComponent } from './components/machinelist/machinelist.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AddmachineComponent } from './components/addmachine/addmachine.component';
+import { EditmachineComponent } from './components/editmachine/editmachine.component';
+import { DetailsmachineComponent } from './components/detailsmachine/detailsmachine.component';
 
 export const routes: Routes = [
   {path : 'home', component:HomeComponent},
