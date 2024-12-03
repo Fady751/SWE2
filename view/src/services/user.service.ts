@@ -1,32 +1,34 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements OnInit {
+
+export class UserService {
+  private dataSubject = new BehaviorSubject<any>(null);
+  data$ = this.dataSubject.asObservable();
   private userData: any = null;
 
   constructor() { }
 
-  async ngOnInit() {
-
+  updateApp(): void {
+    this.dataSubject.next(null);
   }
 
-  async setUser(user: any): Promise<void> {
+  setUser(user: any): any {
     this.userData = user;
-    if(this.userData && !this.userData.urlphoto) {
+    if(this?.userData && !this.userData?.urlphoto) {
       this.userData.urlphoto = 'images/defProfile.jpg';
     }
+    return this.userData;
   }
 
   async getUser() {
-
-    if(this.userData)
-      return this.userData;
-    
     const token = localStorage.getItem('WSToken');
+    if(!token) return this.setUser(null);
 
-    const req = await fetch('http://localhost:3000/user', {
+    const req = await fetch(`http://localhost:3000/user`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -35,12 +37,9 @@ export class UserService implements OnInit {
     });
 
     if (!req.ok) {
-      return this.userData = null;
+      return this.setUser(null);
     }
 
-    this.userData = (await req.json()).user;
-    await this.setUser(this.userData);
-
-    return this.userData;
+    return this.setUser((await req.json()).user);
   }
 }

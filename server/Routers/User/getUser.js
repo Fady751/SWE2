@@ -4,6 +4,6 @@ const router = express.Router();
 const GetUser = require('../../Controllers/User/getUser.js')
 const verifyJWT = require('../../middleware/verifyJWT.js');
 
-router.get('/id', verifyJWT ,GetUser);
+router.get('/', verifyJWT ,GetUser);
 
 module.exports = router;

@@ -11,6 +11,7 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './userProfile.component.html',
   styleUrls: ['./userProfile.component.scss']
 })
+
 export class UserProfileComponent implements OnInit {
   constructor(private route: Router, private userService: UserService) { }
 
@@ -18,8 +19,10 @@ export class UserProfileComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.user = await this.userService.getUser();
+    this.userService.data$.subscribe(async(data) => {
+      this.user = await this.userService.getUser();
+    });
     if(!this.user) {
-      alert('please login !');
       this.route.navigate(['/login']);
       return;
     }
@@ -33,12 +36,11 @@ export class UserProfileComponent implements OnInit {
 
   saveProfile() {
     this.editMode = false;
-    
   }
+
   viewHistory() {
     
   }
-  
 
   onFileSelected(event: Event) {
     

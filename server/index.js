@@ -15,9 +15,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/', require('./Routers/User/editProfile'));
-
-
 app.use('/signin', require('./Routers/User/signIn'));
+app.use('/signup', require('./Routers/User/signup'));
+app.use('/user', require('./Routers/User/getUser'));
 
 
 

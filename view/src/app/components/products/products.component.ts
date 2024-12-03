@@ -1,16 +1,11 @@
 import { Component, input, OnInit } from '@angular/core';
-import { iproduct } from '../../models/iproduct';
 import { CommonModule } from '@angular/common';
-import { Icategory } from '../../models/icategory';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-
-
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule,FormsModule,RouterLink],
+  imports: [CommonModule,FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })

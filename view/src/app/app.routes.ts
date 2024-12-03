@@ -6,6 +6,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { UserProfileComponent } from './components/userProfile/userProfile.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
 import { MachinelistComponent } from './components/machinelist/machinelist.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
   {path : 'home', component:HomeComponent},
@@ -14,5 +15,7 @@ export const routes: Routes = [
   {path : 'userProfile', component:UserProfileComponent},
   {path : 'userlist', component:UserlistComponent},
   {path : 'products', component:ProductsComponent},
-  {path : 'machinelist',component: MachinelistComponent}
+  {path : 'machinelist',component: MachinelistComponent},
+  {path : '', pathMatch: 'full', redirectTo:'home'},
+  {path : '**', component:PageNotFoundComponent}
 ];
