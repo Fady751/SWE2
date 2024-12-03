@@ -23,5 +23,8 @@ export const routes: Routes = [
   {path : 'addmachine', component:AddmachineComponent},
   {path : 'editmachine', component:EditmachineComponent},
   {path : '', pathMatch: 'full', redirectTo:'home'},
-  {path : '**', component:PageNotFoundComponent}
+  {path : '**', component:PageNotFoundComponent},
+  {path : 'detailsmachine', component:DetailsmachineComponent},
+  {path : 'addmachine', component:AddmachineComponent},
+  {path : 'editmachine', component:EditmachineComponent},
 ];
