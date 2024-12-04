@@ -1,8 +1,13 @@
 <div class="machine-details">
   <h1>Machine Details</h1>
-  <div class="details">
+  <div class="details" *ngIf="machine?.name">
     <p><strong>Machine Name:</strong> {{ machine.name }}</p>
-    <p><strong>Location:</strong> {{ machine.location }}</p>
-    <p><strong>state:</strong> {{ machine.location }}</p>
+    <p><strong>Location:</strong> {{ machine.latitude }}, {{ machine.longitude }}</p>
+    <p><strong>state:</strong> {{ machine.state }}</p>
+  </div>
+  <div class="details" *ngIf="!machine?.name">
+    <p class="alert alert-danger text-center rounded p-3 mb-3">
+      <i class="bi bi-exclamation-circle"></i> 404 NOT SUCH MACHINE
+    </p>
   </div>
 </div>

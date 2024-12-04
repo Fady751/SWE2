@@ -22,6 +22,7 @@ app.use('/addmachine', require('./Routers/Machine/addMachine'));
 app.use('/deletemachine', require('./Routers/Machine/deletMachine'));
 // app.use('/editmachine', require('./Routers/Machine/editMachine'));
 app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
+app.use('/machine', require('./Routers/Machine/getMachine'));
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {

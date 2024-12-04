@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let machine of machines;">
-          <td>{{ machine.name }}</td>
+          <td (click)="onDetails(machine.id)">{{ machine.name }}</td>
           <td>{{ machine.latitude }}, {{ machine.longitude }}</td>
           <td>
             <button (click)="editMachine(machine.id)" class="icon-btn edit-btn">

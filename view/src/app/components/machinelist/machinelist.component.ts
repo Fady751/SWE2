@@ -45,6 +45,9 @@ export class MachinelistComponent implements OnInit {
   editMachine(id: number) {
     this.router.navigate(['editmachine', id]);
   }
+  onDetails(id: number) {
+    this.router.navigate(['detailsmachine', id]);
+  }
   async deleteMachine(id: number) {
     if (confirm('Are you sure you want to delete this machine?')) {
       const res = await fetch(`http://localhost:3000/deletemachine`, {
