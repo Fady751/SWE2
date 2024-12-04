@@ -19,9 +19,9 @@ app.use('/signin', require('./Routers/User/signIn'));
 app.use('/signup', require('./Routers/User/signup'));
 app.use('/user', require('./Routers/User/getUser'));
 app.use('/addmachine', require('./Routers/Machine/addMachine'));
-app.use('/addmachine', require('./Routers/Machine/addMachine'));
-app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
 app.use('/deletemachine', require('./Routers/Machine/deletMachine'));
+app.use('/editmachine', require('./Routers/Machine/editMachine'));
+app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
