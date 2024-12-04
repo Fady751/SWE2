@@ -7,7 +7,8 @@ const { query ,  pool} = require('../../config/data_base');
 const AddMachine = async(req , res)=>{
     const {name , latitude , longitude , state } = req.body;
 
-    if(!name || !latitude || !longitude ) return res.status(401).json({message : "invalid data"});
+    if(!name) return res.status(401).json({message : "name require"});
+    if(!latitude || !longitude ) return res.status(401).json({message : "location require"});
 
     try{
         const checkName = (await query(`select * from machine where name = '${name}'`))[0];

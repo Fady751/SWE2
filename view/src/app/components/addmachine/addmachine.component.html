@@ -1,7 +1,10 @@
 <div class="add-machine-container">
   <h2>Add a New Machine</h2>
+  <p *ngIf="err" class="alert alert-danger text-center rounded p-3 mb-3">
+    <i class="bi bi-exclamation-circle"></i> {{ err }}
+  </p>
 
-  <form (ngSubmit)="onSubmit()">
+  <form (submit)="onSubmit($event)">
     <div class="form-group">
       <label for="machineName">Machine Name</label>
       <input
@@ -15,7 +18,6 @@
     <div class="form-group">
       <label for="map">Map</label>
       <!-- ////////////////////////////////////////////////////// -->
-      <!-- <div id="map" style="height: 600px; width: 100%;"></div> -->
       <google-map
         [center]="center"
         [zoom]="zoom"
@@ -30,8 +32,6 @@
     
       <!-- ////////////////////////////////////////////////////////// -->
     </div>
-
-    <button class="add-machine-btn" (click)="1">Submit</button>
-
+    <button class="add-machine-btn">Submit</button>
   </form>
 </div>

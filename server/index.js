@@ -15,11 +15,13 @@ const notification = new WebSocket.Server({ port: 8081 });
 app.use(cors());
 app.use(express.json());
 
-app.use('/', require('./Routers/Machine/addMachine'));
 app.use('/signin', require('./Routers/User/signIn'));
 app.use('/signup', require('./Routers/User/signup'));
 app.use('/user', require('./Routers/User/getUser'));
-app.use('/editProfile', require('./Routers/User/editProfile'));
+app.use('/addmachine', require('./Routers/Machine/addMachine'));
+app.use('/addmachine', require('./Routers/Machine/addMachine'));
+app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
+app.use('/deletemachine', require('./Routers/Machine/deletMachine'));
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {

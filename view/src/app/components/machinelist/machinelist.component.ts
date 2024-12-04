@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 interface Machine {
+  id: number;
   name: string;
-  location: string;
+  latitude: number;
+  longitude: number;
+  state: string;
+  sorted: string;
+  estimatedtime: Date;
 }
 @Component({
   selector: 'app-machinelist',
@@ -16,31 +21,49 @@ interface Machine {
     "../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css"
   ]
 })
-export class MachinelistComponent {
+export class MachinelistComponent implements OnInit {
   constructor(private router: Router) { }
-  machines: Machine[] = [
-    { name: 'Machine A', location: 'Location 1' },
-    { name: 'Machine B', location: 'Location 2' },
-    { name: 'Machine C', location: 'Location 3' },
-  ];
+  machines: Machine[] = [];
+
+  async ngOnInit() {
+    const res = await fetch('http://localhost:3000/getAllMachines');
+
+    if(!res.ok) {
+      alert('database server error');
+      return;
+    }
+
+    const data = await res.json();
+
+    this.machines = data.result;
+  }
 
   addMachine() {
     this.router.navigate(['addmachine']);
   }
 
-  editMachine(index: number) {
+  editMachine(id: number) {
     this.router.navigate(['editmachine']);
-    // const updatedName = prompt('Enter new name:', this.machines[index].name);
-    // const updatedLocation = prompt(
-    //   'Enter new location:',
-    //   this.machines[index].location
-    // );
-    // if (updatedName !== null) this.machines[index].name = updatedName;
-    // if (updatedLocation !== null) this.machines[index].location = updatedLocation;
   }
-  deleteMachine(index: number) {
+  async deleteMachine(id: number) {
     if (confirm('Are you sure you want to delete this machine?')) {
+      const res = await fetch(`http://localhost:3000/deletemachine`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('WSToken')}`
+        },
+        body: JSON.stringify({id})
+      });
+
+      const result = await res.json();
+
+      if(!res.ok) {
+        alert(result.message);
+        return;
+      }
       
+      this.machines = this.machines.filter(mat => mat.id !== id);
     }
   }
   

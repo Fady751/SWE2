@@ -1,6 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addmachine',
@@ -12,9 +13,9 @@ import { GoogleMapsModule } from '@angular/google-maps';
   ]
 })
 export class AddmachineComponent {
-
+  constructor(private router: Router) { }
   center: google.maps.LatLngLiteral = { lat: 30.0444, lng: 31.2357 };
-  zoom = 12;
+  zoom = 15;
   options: google.maps.MapOptions = {
     mapTypeId: 'roadmap',
     scrollwheel: true,
@@ -32,21 +33,32 @@ export class AddmachineComponent {
       console.log('Selected Coordinates:', this.selectedPlace);
     }
   }
-    constructor() {
-      
+
+  err: string = '';
+  async onSubmit(event: Event) {
+    event.preventDefault();
+
+    const name = (document.getElementById('machineName') as HTMLSelectElement).value;
+    const data = {name, latitude: this.selectedPlace?.lat, longitude: this.selectedPlace?.lng};
+
+    const res = await fetch('http://localhost:3000/addmachine', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${localStorage.getItem('WSToken')}`
+      },
+      body: JSON.stringify(data)
+    })
+
+    const out = await res.json();
+
+    if(!res.ok) {
+      this.err = out.message;
+      return;
     }
 
-    onSubmit(): void {
-      // if (this.addMachineForm.invalid) {
-      //   return;
-      // }
-
-      // const machineName = this.addMachineForm.value.machineName;
-      // const map = this.addMachineForm.value.map;
-
-      // console.log('Machine Name:', machineName);
-      // console.log('Map URL or Coordinates:', map);
-    }
+    this.router.navigate(['machinelist']);
+  }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
