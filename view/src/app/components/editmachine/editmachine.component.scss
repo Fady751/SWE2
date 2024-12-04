@@ -55,3 +55,48 @@ button:disabled {
 button:hover {
   background-color: #218838;
 }
+
+/////////////////////////////////////
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  background-color: #f0f9f4;
+}
+
+select option {
+  padding: 10px;
+  background-color: #fff;
+}
+
+select option:hover {
+  background-color: #f0f0f0;
+}
+
+select option:checked {
+  background-color: #e0f7e1;
+}
+
+

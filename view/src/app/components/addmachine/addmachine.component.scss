@@ -56,15 +56,3 @@ button:hover {
   background-color: #218838;
 }
 
-
-
-
-/* Styling for the Google Map container */
-google-map {
-  height: 400px; /* Adjust the height of the map as needed */
-  width: 100%;   /* Ensure the map takes the full width */
-  border: 2px solid #ddd; /* Optional border for better visuals */
-  border-radius: 8px; /* Smooth corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  overflow: hidden; /* Prevents map content overflow */
-}
