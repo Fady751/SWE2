@@ -1,56 +1,54 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import * as L from 'leaflet';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-addmachine',
   standalone: true,
-  imports: [ ReactiveFormsModule],
+  imports: [ ReactiveFormsModule, GoogleMapsModule, NgIf],
   templateUrl: './addmachine.component.html',
-  styleUrl: './addmachine.component.scss'
+  styleUrls: ['./addmachine.component.scss', 
+    "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
+  ]
 })
 export class AddmachineComponent {
-    addMachineForm: FormGroup;
 
+  center: google.maps.LatLngLiteral = { lat: 30.0444, lng: 31.2357 };
+  zoom = 12;
+  options: google.maps.MapOptions = {
+    mapTypeId: 'roadmap',
+    scrollwheel: true,
+    disableDefaultUI: false,
+  };
+
+  selectedPlace: { lat: number; lng: number } | null = null;
+
+  onMapClick(event: google.maps.MapMouseEvent) {
+    if (event.latLng) {
+      this.selectedPlace = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+      };
+      console.log('Selected Coordinates:', this.selectedPlace);
+    }
+  }
     constructor(private fb: FormBuilder) {
-      this.addMachineForm = this.fb.group({
-        machineName: ['', [Validators.required]],
-        map: ['', [Validators.required]],  // Updated from photoMap to map
-      });
+      
     }
 
     onSubmit(): void {
-      if (this.addMachineForm.invalid) {
-        return;
-      }
+      // if (this.addMachineForm.invalid) {
+      //   return;
+      // }
 
-      const machineName = this.addMachineForm.value.machineName;
-      const map = this.addMachineForm.value.map;
+      // const machineName = this.addMachineForm.value.machineName;
+      // const map = this.addMachineForm.value.map;
 
-      console.log('Machine Name:', machineName);
-      console.log('Map URL or Coordinates:', map);
+      // console.log('Machine Name:', machineName);
+      // console.log('Map URL or Coordinates:', map);
     }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-    private map!: L.Map;
-
-    ngOnInit(): void {
-      this.initMap();
-    }
-
-    private initMap(): void {
-      // Initialize the map
-      this.map = L.map('map').setView([51.505, -0.09], 13);
-
-      // Add OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(this.map);
-
-      // Add a marker
-      L.marker([51.505, -0.09]).addTo(this.map)
-        .bindPopup('A marker on the map.')
-        .openPopup();
-    }
-  }
+}

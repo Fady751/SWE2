@@ -1,7 +1,7 @@
 <div class="add-machine-container">
   <h2>Add a New Machine</h2>
 
-  <form [formGroup]="addMachineForm" (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="machineName">Machine Name</label>
       <input
@@ -15,8 +15,19 @@
     <div class="form-group">
       <label for="map">Map</label>
       <!-- ////////////////////////////////////////////////////// -->
-      <div id="map" style="height: 600px; width: 100%;"></div>
-
+      <!-- <div id="map" style="height: 600px; width: 100%;"></div> -->
+      <google-map
+        [center]="center"
+        [zoom]="zoom"
+        [options]="options"
+        (mapClick)="onMapClick($event)"
+        style="height: 100%; width: 100%;">
+        <map-marker *ngIf="selectedPlace" [position]="selectedPlace!"></map-marker>
+      </google-map>
+      <p *ngIf="selectedPlace">
+        Selected Coordinates: <strong>{{ selectedPlace.lat }}, {{ selectedPlace.lng }}</strong>
+      </p>
+    
       <!-- ////////////////////////////////////////////////////////// -->
     </div>
 
