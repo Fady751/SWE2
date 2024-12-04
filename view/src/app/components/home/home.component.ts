@@ -14,7 +14,7 @@ export class HomeComponent {
   map!: google.maps.Map;
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
-  // socket: any = new WebSocket('ws://localhost:8080');
+  socket: any = new WebSocket('ws://localhost:8080');
   routeCoordinates: any;
   marker: any;
   flag: any = false;
@@ -42,13 +42,13 @@ export class HomeComponent {
     });
 
   
-  // this.socket.addEventListener('message', (event: any) => {
-  //   console.log('Message from server:', event.data);
+  this.socket.addEventListener('message', (event: any) => {
+    console.log('Message from server:', event.data);
     
-  //   const mess = JSON.parse(event.data);
+    const mess = JSON.parse(event.data);
     
-  //   this.calculateRoute({ lat: mess.latitude, lng: mess.longitude });
-  // });
+    this.calculateRoute({ lat: mess.latitude, lng: mess.longitude });
+  });
 
   }
 
@@ -65,10 +65,7 @@ export class HomeComponent {
       (response, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           this.directionsRenderer.setDirections(response);
-          if(!this.flag) {
-            this.flag = true;
-            this.routeCoordinates = this.getRouteCoordinates(response);
-          }
+          this.routeCoordinates = this.getRouteCoordinates(response);
         } else {
           console.error('Directions request failed due to ' + status);
         }
@@ -91,7 +88,6 @@ export class HomeComponent {
   }
 
   Move() {
-    this.directionsRenderer.setDirections(null);
     let i = this.routeCoordinates.length - 1;
     const interval = setInterval (()=>{
       if(i == -1) clearInterval(interval);
@@ -99,7 +95,7 @@ export class HomeComponent {
       this.marker.setPosition(this.routeCoordinates[i]);
       // this.calculateRoute(this.routeCoordinates[i]);
       i--;
-    }, 50);
+    }, 250);
   }
 }
 
