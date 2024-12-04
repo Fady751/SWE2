@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { MapComponent } from '../map/map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [GoogleMapsModule, NgIf],
+  imports: [GoogleMapsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

@@ -8,19 +8,20 @@
         type="text"
         id="machineName"
         formControlName="machineName"
+        value="{{ machine.name }}"
         required
       />
     </div>
 
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="status">Machine Status</label>
-      <select id="status" formControlName="status" required>
-        <option value="on">On</option>
-        <option value="off">Off</option>
-        <option value="maintenance">Maintenance</option>
+      <select id="status" required>
+        <option value="on" {{ on }}>on</option>
+        <option value="off" {{ off }} >off</option>
+        <option value="maintenance" {{ maintenance }}>maintenance</option>
       </select>
-    </div>
+    </div> -->
 
 
 
