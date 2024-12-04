@@ -43,7 +43,7 @@ export class MachinelistComponent implements OnInit {
   }
 
   editMachine(id: number) {
-    this.router.navigate(['editmachine']);
+    this.router.navigate(['editmachine', id]);
   }
   async deleteMachine(id: number) {
     if (confirm('Are you sure you want to delete this machine?')) {
