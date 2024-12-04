@@ -1,12 +1,11 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-addmachine',
   standalone: true,
-  imports: [ ReactiveFormsModule, GoogleMapsModule, NgIf],
+  imports: [GoogleMapsModule, NgIf],
   templateUrl: './addmachine.component.html',
   styleUrls: ['./addmachine.component.scss', 
     "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
@@ -33,7 +32,7 @@ export class AddmachineComponent {
       console.log('Selected Coordinates:', this.selectedPlace);
     }
   }
-    constructor(private fb: FormBuilder) {
+    constructor() {
       
     }
 

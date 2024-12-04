@@ -1,59 +1,42 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import * as L from 'leaflet';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-editmachine',
   standalone: true,
-  imports: [ ReactiveFormsModule],
+  imports: [GoogleMapsModule, NgIf],
   templateUrl: './editmachine.component.html',
   styleUrl: './editmachine.component.scss'
 })
 export class EditmachineComponent {
-    addMachineForm: FormGroup;
+  center: google.maps.LatLngLiteral = { lat: 30.0444, lng: 31.2357 };
+  zoom = 12;
+  options: google.maps.MapOptions = {
+    mapTypeId: 'roadmap',
+    scrollwheel: true,
+    disableDefaultUI: false,
+  };
 
-    constructor(private fb: FormBuilder) {
-      this.addMachineForm = this.fb.group({
-        machineName: ['', [Validators.required]],
-        map: ['', [Validators.required]],  // Updated from photoMap to map
-      });
-    }
+  selectedPlace: { lat: number; lng: number } | null = null;
 
-    onSubmit(): void {
-      if (this.addMachineForm.invalid) {
-        return;
-      }
-
-      const machineName = this.addMachineForm.value.machineName;
-      const map = this.addMachineForm.value.map;
-
-      console.log('Machine Name:', machineName);
-      console.log('Map URL or Coordinates:', map);
-    }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-    private map!: L.Map;
-
-    ngOnInit(): void {
-      this.initMap();
-    }
-
-    private initMap(): void {
-      // Initialize the map
-      this.map = L.map('map').setView([51.505, -0.09], 13);
-
-      // Add OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(this.map);
-
-      // Add a marker
-      L.marker([51.505, -0.09]).addTo(this.map)
-        .bindPopup('A marker on the map.')
-        .openPopup();
+  onMapClick(event: google.maps.MapMouseEvent) {
+    if (event.latLng) {
+      this.selectedPlace = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+      };
+      console.log('Selected Coordinates:', this.selectedPlace);
     }
   }
+ 
+    constructor() { }
+      
+
+    onSubmit(): void {
+      
+    }
+}
 
 
 
