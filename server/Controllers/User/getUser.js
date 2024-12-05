@@ -11,11 +11,13 @@ const GetUser = async(req, res)=>{
     if(user.id == DataOwnerId || user.role == 'Admin'){
         try{
             const Data = await query(`select
-                orders.id AS OrderID , orders.list AS Order , orders.confirmed AS Confirmed 
+                users.id AS ID, users.name as Name, users.email AS Email ,
+                users.role AS Role , users.gender as Gender , users.urlphoto AS Photo,
+                orders.id AS OrderID , orders.list AS Order , orders.confirmed AS Confirmed  
                 from users join orders 
                 on users.id = orders.user_id 
                 where users.id = ${DataOwnerId}`);
-            return res.status(200).json({message: "done", user: [{user}, Data[0]]});
+            return res.status(200).json({message: "done", user: Data[0]});
         }
         catch(err){
             return res.status(500).json({message: err });
