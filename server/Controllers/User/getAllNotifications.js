@@ -8,7 +8,7 @@ const GetAllNotifications = async (req , res)=>{
     
     try{
         const notifications = await query(`select 
-            notification.id AS NotificationId , notification.content AS Content , machine.name AS MachineName 
+            notification.id AS id , notification.content AS description , machine.name AS title 
             from notification join machine on  
             notification.machine_id = machine.id
             where notification.user_id = ${user.id}`);

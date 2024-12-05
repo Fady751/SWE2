@@ -59,4 +59,8 @@ export class NavbarComponent  {
     this.isSlideOut = true;
     this.router.navigate(['/userProfile']);
   }
+  onNotification(){
+    this.isSlideOut = true;
+    this.router.navigate(['/notification', this.user.id]);
+  }
 }

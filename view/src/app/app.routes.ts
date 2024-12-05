@@ -27,7 +27,7 @@ export const routes: Routes = [
   {path : 'detailsmachine/:id', component:DetailsmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'addmachine', component:AddmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'editmachine/:id', component:EditmachineComponent, canActivate:[adminAuthGuard]},
-  {path : 'notification', component:NotificationComponent, canActivate:[loginAuthGuard]},
+  {path : 'notification/:id', component:NotificationComponent, canActivate:[loginAuthGuard]},
   {path : '', pathMatch: 'full', redirectTo:'home'},
   {path : '**', component:PageNotFoundComponent}
 

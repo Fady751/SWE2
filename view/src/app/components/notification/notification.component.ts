@@ -1,5 +1,6 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-notification',
@@ -8,22 +9,33 @@ import { Component } from '@angular/core';
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss'
 })
-export class NotificationComponent {
-  notifications = [
-    { id: 1, title: 'Sorting Complete', description: 'Batch #123 sorted successfully.', timestamp: new Date() },
-    { id: 2, title: 'Error Detected', description: 'An error occurred in bin #4.', timestamp: new Date('2024-12-01T10:30:00') },
-    { id: 3, title: 'Maintenance Required', description: 'Conveyor belt needs servicing.', timestamp: new Date() },
-  ];
+export class NotificationComponent implements OnInit {
+  constructor(private route: ActivatedRoute) { }
+  notifications: any[] = [];
+  
+  async ngOnInit() {
+    this.route.paramMap.subscribe(async(params) => {
+      
+      const res = await fetch(`http://localhost:3000/notifications`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('WSToken')}`
+        }
+      });
+
+      if (!res.ok) {
+        return;
+      }
+
+      const data = await res.json();
+
+      this.notifications = data.result;
+    });
+  }
   clearNotifications() {
     this.notifications = [];
   }
 
-
-  formatDate(timestamp: any): string {
-    return new Intl.DateTimeFormat('en-US', {
-      dateStyle: 'short',
-      timeStyle: 'short',
-    }).format(new Date(timestamp));
-  }
 }
 
