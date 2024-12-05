@@ -83,7 +83,7 @@ const OrderMachine = async (req, res) => {
           await query(`UPDATE machine SET latitude = ${route[i].lat}, longitude = ${route[i].lng} WHERE id = ${nearestMachine.id}`);
           i--;
         }
-      }, 125);
+      }, 1000);
   
       return res.status(200).json({
         nearestMachine,
