@@ -6,7 +6,8 @@
       <input
         type="text"
         placeholder="Search by name..."
-        (input)="onSearch()"
+        #idSearch
+        (keyup)="onSearch(idSearch.value)"
         class="search-input"
       />
   </div>
@@ -20,7 +21,7 @@
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let machine of machines">
+          <tr *ngFor="let machine of filtered">
               <td (click)="onDetails(machine.id)">{{ machine.name }}</td>
               <td>{{ machine.latitude }}, {{ machine.longitude }}</td>
               <td>

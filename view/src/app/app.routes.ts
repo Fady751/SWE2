@@ -23,7 +23,7 @@ export const routes: Routes = [
   {path : 'userlist', component:UserlistComponent, canActivate:[adminAuthGuard]},
   {path : 'products', component:ProductsComponent, canActivate:[loginAuthGuard]},
   {path : 'machinelist',component: MachinelistComponent, canActivate:[adminAuthGuard]},
-  {path: 'userdetials',component:UserdetialsComponent, canActivate:[adminAuthGuard]},
+  {path: 'userdetials/:id',component:UserdetialsComponent, canActivate:[adminAuthGuard]},
   {path : 'detailsmachine/:id', component:DetailsmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'addmachine', component:AddmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'editmachine/:id', component:EditmachineComponent, canActivate:[adminAuthGuard]},

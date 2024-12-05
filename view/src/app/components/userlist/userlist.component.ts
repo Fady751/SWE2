@@ -1,5 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-userlist',
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './userlist.component.scss'
 })
 export class UserlistComponent implements OnInit {
+  constructor(private router: Router) { }
   users: any[] = [];
 
   async ngOnInit(): Promise<void> {
@@ -70,11 +72,8 @@ export class UserlistComponent implements OnInit {
       );
     }
 
-    deleteUser(userId: number) {
-      this.users = this.users.filter(user => user.id !== userId);
-    }
 
     viewDetails(userId: number) {
-      console.log(`Viewing details for user with ID: ${userId}`);
+      this.router.navigate(['userdetials', userId])
     }
   }
