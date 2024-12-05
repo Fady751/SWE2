@@ -1,35 +1,99 @@
 import { Component } from '@angular/core';
-import { MapComponent } from '../map/map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [GoogleMapsModule, NgIf],
+  imports: [GoogleMapsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  center: google.maps.LatLngLiteral = { lat: 30.0444, lng: 31.2357 }; // Cairo, Egypt
-  zoom = 12;
-  options: google.maps.MapOptions = {
-    mapTypeId: 'roadmap',
-    scrollwheel: true,
-    disableDefaultUI: false,
-  };
+  map!: google.maps.Map;
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  socket: any = new WebSocket('ws://localhost:8080');
+  routeCoordinates: any;
+  marker: any;
+  flag: any = false;
 
-  selectedPlace: { lat: number; lng: number } | null = null;
+  ngOnInit(): void {
+    const mapOptions = {
+      center: { lat: 30.0444, lng: 31.2357 }, // Cairo
+      zoom: 12,
+    };
 
-  // Handle map click event
-  onMapClick(event: google.maps.MapMouseEvent) {
-    if (event.latLng) {
-      this.selectedPlace = {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-      };
-      console.log('Selected Coordinates:', this.selectedPlace);
-    }
+    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, mapOptions);
+    this.directionsRenderer = new google.maps.DirectionsRenderer({
+      map: this.map,
+      polylineOptions: {
+        strokeColor: '#FF0000',
+        strokeWeight: 6,
+      },
+    });
+
+    this.calculateRoute({ lat: 30.047013909799027, lng: 31.22874736727681 }); // giza
+
+    this.marker = new google.maps.Marker({
+      map: this.map,
+      position: { lat: 30.047013909799027, lng: 31.22874736727681 },
+    });
+
+  
+  this.socket.addEventListener('message', (event: any) => {
+    console.log('Message from server:', event.data);
+    
+    const mess = JSON.parse(event.data);
+    
+    this.calculateRoute({ lat: mess.latitude, lng: mess.longitude });
+  });
+
+  }
+
+  calculateRoute(destination: any) {
+    const origin = { lat: 30.0444, lng: 31.2357 }; // cairo
+    // const  = { lat: 29.9765, lng: 31.1313 };
+
+    this.directionsService.route(
+      {
+        origin,
+        destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (response, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.directionsRenderer.setDirections(response);
+          this.routeCoordinates = this.getRouteCoordinates(response);
+        } else {
+          console.error('Directions request failed due to ' + status);
+        }
+      }
+    );
+  }
+  getRouteCoordinates(response: any) {
+    const coordinates: { lat: number; lng: number }[] = [];
+
+    const route = response.routes[0];
+    route.legs.forEach((leg: any) => {
+      leg.steps.forEach((step: any) => {
+        step.lat_lngs.forEach((latLng: any) => {
+          coordinates.push({ lat: latLng.lat(), lng: latLng.lng() });
+        });
+      });
+    });
+
+    return coordinates;
+  }
+
+  Move() {
+    let i = this.routeCoordinates.length - 1;
+    const interval = setInterval (()=>{
+      if(i == -1) clearInterval(interval);
+      console.log(this.routeCoordinates[i]);
+      this.marker.setPosition(this.routeCoordinates[i]);
+      // this.calculateRoute(this.routeCoordinates[i]);
+      i--;
+    }, 250);
   }
 }
 

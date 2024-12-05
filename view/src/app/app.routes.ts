@@ -13,6 +13,7 @@ import { DetailsmachineComponent } from './components/detailsmachine/detailsmach
 import { UserdetialsComponent } from './components/userdetials/userdetials.component';
 import { loginAuthGuard } from '../auth/login-auth.guard';
 import { adminAuthGuard } from '../auth/admin-auth.guard';
+import { NotificationComponent } from './components/notification/notification.component';
 
 export const routes: Routes = [
   {path : 'home', component:HomeComponent},
@@ -26,7 +27,8 @@ export const routes: Routes = [
   {path : 'detailsmachine/:id', component:DetailsmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'addmachine', component:AddmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'editmachine/:id', component:EditmachineComponent, canActivate:[adminAuthGuard]},
+  {path : 'notification', component:NotificationComponent, canActivate:[loginAuthGuard]},
   {path : '', pathMatch: 'full', redirectTo:'home'},
   {path : '**', component:PageNotFoundComponent}
-  
+
 ];
