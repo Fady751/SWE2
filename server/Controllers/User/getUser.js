@@ -2,7 +2,7 @@ const express = require('express');
 const { error } = require('console');
 const bodyParser = require('body-parser');
 const { query ,  pool} = require('../../config/data_base'); 
-const { stat } = require('fs');
+
 
 const GetUser = async(req, res)=>{
     // console.log(req.user);

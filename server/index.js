@@ -10,7 +10,8 @@ const app = express();
 const port = 3000;
 const host = 'localhost';
 const machine = new WebSocket.Server({ port: 8080 }); // add, remove, moved on map(edit)
-const notification = new WebSocket.Server({ port: 8081 });
+
+ 
 
 app.use(cors());
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/deletemachine', require('./Routers/Machine/deletMachine'));
 // app.use('/editmachine', require('./Routers/Machine/editMachine'));
 app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
 app.use('/machine', require('./Routers/Machine/getMachine'));
+app.use('/' , require('./Routers/User/selectMaterial'));
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -43,6 +45,49 @@ app.use('/machine', require('./Routers/Machine/getMachine'));
 //     }
 //     res.send({ message: 'File uploaded successfully', file: req.file });
 // });
+
+(async()=>{ 
+    const pgClient = await pool.connect(); 
+    await pgClient.query(`listen machine_add `)
+    pgClient.on('notification', (msg) => {
+        let data  = JSON.parse(msg.payload);
+        data.type = "insert"
+        machine.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+        }
+        });
+    });
+})();
+
+(async()=>{
+    const pgClient = await pool.connect(); 
+    await pgClient.query(`listen machine_update `)
+    pgClient.on('notification', (msg) => {
+        let data  = JSON.parse(msg.payload);
+        data.type = "update"
+        machine.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+        }
+        });
+    });
+})();
+
+(async()=>{ 
+    const pgClient = await pool.connect(); 
+    await pgClient.query(`listen machine_delete `)
+    pgClient.on('notification', (msg) => {
+        let data  = JSON.parse(msg.payload);
+        data.type = "delete"
+        machine.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+        }
+        });
+    });
+})();
+
 
 app.listen(port, host, async(err) => {
     if(err) {
