@@ -4,9 +4,8 @@ const bodyParser = require('body-parser');
 const { query ,  pool} = require('../../config/data_base'); 
 
 const GetAllCategories = async(req , res)=>{
-
     try{
-        const categories = await query(`select id , name from category`) ;
+        const categories = (await query(`select id , name from category`))[0] ;
         if(!categories) return res.status(404).json({message: "No category has been found!"})
         
         return res.status(200).json({message: categories});

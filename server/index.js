@@ -24,7 +24,7 @@ app.use('/editeRoleUser', require('./Routers/User/editeRoleUser'));
 app.use('/addmachine', require('./Routers/Machine/addMachine'));
 app.use('/deletemachine', require('./Routers/Machine/deletMachine'));
 app.use('/editmachine', require('./Routers/Machine/editMachine'));
-app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
+app.use('/getmaterial', require('./Routers/Material/getAllMatrials'));
 app.use('/machine', require('./Routers/Machine/getMachine'));
 app.use('/' , require('./Routers/User/selectMaterial'));
 
