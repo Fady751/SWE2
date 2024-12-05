@@ -8,7 +8,7 @@ const GetAllCategories = async(req , res)=>{
         const categories = (await query(`select id , name from category`))[0] ;
         if(!categories) return res.status(404).json({message: "No category has been found!"})
         
-        return res.status(200).json({message: categories});
+        return res.status(200).json({message:"done" , result : categories});
     }
     catch(err){
         return res.status(500).json({message: err})
