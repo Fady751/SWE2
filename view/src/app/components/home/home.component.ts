@@ -14,7 +14,7 @@ export class HomeComponent {
   directionsRenderer = new google.maps.DirectionsRenderer();
   socket: any = new WebSocket('ws://localhost:8080');
   routeCoordinates: any;
-  markers: google.maps.Marker[] = [];
+  markers: {id: number, marker: google.maps.Marker}[] = [];
 
   async ngOnInit(): Promise<void> {
     const mapOptions = {
@@ -33,21 +33,30 @@ export class HomeComponent {
     const data = await res.json();
 
     data.result.forEach((machine: any) => {
-      this.addMarker({lat: +machine.latitude, lng: +machine.longitude}, machine.name,
+      this.addMarker(machine.id, {lat: +machine.latitude, lng: +machine.longitude}, machine.name,
         machine.state === 'on'? 'green':  machine.state === 'off'? 'red': machine.state === 'maintenance'? 'blue': 'purple');
     });
 
 
-    // this.socket.addEventListener('message', (event: any) => {
-    //   console.log('Message from server:', event.data);
-    //   const mess = JSON.parse(event.data);
-
-    //   this.addMarker({ lat: mess.latitude, lng: mess.longitude });
-    //   this.calculateRoute({ lat: mess.latitude, lng: mess.longitude });
-    // });
+    this.socket.addEventListener('message', (event: any) => {
+      const machine = JSON.parse(event.data);
+      if(machine.type !== 'insert') {
+        this.markers.forEach((marker: any)=>{
+          if(marker.id == +machine.id) {
+            console.log(marker.id);
+            marker.marker.setMap(null);
+          }
+        })
+        this.markers = this.markers.filter(marker => marker.id != +machine.id);
+      }
+      if(machine.type !== 'delete') {
+        this.addMarker(+machine.id, {lat: +machine.latitude, lng: +machine.longitude}, machine.name,
+          machine.state === 'on'? 'green':  machine.state === 'off'? 'red': machine.state === 'maintenance'? 'blue': 'purple');
+      }
+    });
   }
 
-  addMarker(position: { lat: number; lng: number }, note: string, color: string) {
+  addMarker(id: number, position: { lat: number; lng: number }, note: string, color: string) {
     const customIcon = {
       url: `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png`,
       scaledSize: new google.maps.Size(40, 40),
@@ -67,6 +76,6 @@ export class HomeComponent {
       infoWindow.open(this.map, marker);
     });
   
-    this.markers.push(marker);
+    this.markers.push({id, marker});
   }
 }
