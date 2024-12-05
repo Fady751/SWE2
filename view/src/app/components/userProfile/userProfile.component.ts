@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit {
     this.user = await this.userService.getUser();
     this.userService.data$.subscribe(async(data) => {
       this.user = await this.userService.getUser();
-      console.log('userService, user =', this.user);
+      // console.log('userService, user =', this.user);
     });
     if(!this.user) {
       this.route.navigate(['/login']);
@@ -40,20 +40,20 @@ export class UserProfileComponent implements OnInit {
   async saveProfile(event: Event) {
     event.preventDefault();
     let photo = false;
-    if(this.selectedFile) {
-      const formData = new FormData();
-      formData.append('image', this.selectedFile);
-      const response = await fetch('http://localhost:3000/upload', {
-        method: 'POST',
-        body: formData,
-      });
+    // if(this.selectedFile) {
+    //   const formData = new FormData();
+    //   formData.append('image', this.selectedFile);
+    //   const response = await fetch('http://localhost:3000/upload', {
+    //     method: 'POST',
+    //     body: formData,
+    //   });
 
-      if (!response.ok) {
-        this.err = 'Failed to upload image';
-        return;
-      }
-      photo = true;
-    }
+    //   if (!response.ok) {
+    //     this.err = 'Failed to upload image';
+    //     return;
+    //   }
+    //   photo = true;
+    // }
     const name = (document.getElementById('name') as HTMLSelectElement).value;
     const email = (document.getElementById('email') as HTMLSelectElement).value;
 

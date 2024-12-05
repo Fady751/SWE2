@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { query ,  pool} = require('../../config/data_base');  
 
 const EditProfile = async(req , res)=>{
+    console.log(1);
     const {name , email , photoUrl} = req.body ;
     const user = req.user ; 
    

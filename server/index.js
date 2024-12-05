@@ -21,12 +21,15 @@ app.use('/signup', require('./Routers/User/signup'));
 app.use('/user', require('./Routers/User/getUser'));
 app.use('/getAllUsres', require('./Routers/User/getAllUsres'));
 app.use('/editeRoleUser', require('./Routers/User/editeRoleUser'));
+app.use('/editProfile', require('./Routers/User/editProfile'));
 app.use('/addmachine', require('./Routers/Machine/addMachine'));
 app.use('/deletemachine', require('./Routers/Machine/deletMachine'));
 app.use('/editmachine', require('./Routers/Machine/editMachine'));
 app.use('/getmaterial', require('./Routers/Material/getAllMatrials'));
+app.use('/getcategories', require('./Routers/Material/getAllCategories'));
 app.use('/machine', require('./Routers/Machine/getMachine'));
-app.use('/' , require('./Routers/User/selectMaterial'));
+app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
+app.use('/selectMaterial' , require('./Routers/User/selectMaterial'));
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
