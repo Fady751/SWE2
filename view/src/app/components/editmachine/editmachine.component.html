@@ -2,6 +2,9 @@
   <h2>edit Machine</h2>
 
   <form (submit)="onSubmit($event)">
+    <p *ngIf="err" class="alert alert-danger text-center rounded p-3 mb-3">
+      <i class="bi bi-exclamation-circle"></i> {{ err }}
+    </p>
     <div class="form-group">
       <label for="machineName">Machine Name</label>
       <input
