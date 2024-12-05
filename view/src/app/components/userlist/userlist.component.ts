@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-userlist',
@@ -8,13 +8,33 @@ import { Component } from '@angular/core';
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.scss'
 })
-export class UserlistComponent {
-  users = [
-    { id: 1, name: 'John Doe', role: 'Admin', photo: 'https://via.placeholder.com/50', showEditOptions: false },
-    { id: 2, name: 'Jane Smith', role: 'User', photo: 'https://via.placeholder.com/50' , showEditOptions: false},
-    { id: 3, name: 'Sam Wilson', role: 'User', photo: 'https://via.placeholder.com/50', showEditOptions: false },
-  ];
+export class UserlistComponent implements OnInit {
+  users: any[] = [];
 
+  async ngOnInit(): Promise<void> {
+    const res = await fetch('http://localhost:3000/getAllUsres', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('WSToken')}`
+        }
+      }
+    );
+
+    const data = await res.json();
+
+    if(!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    this.users = data.Users;
+    this.users.forEach((user: any) => {
+      if(!user.urlphoto) {
+        user.urlphoto = 'images/defProfile.jpg';
+      }
+    })
+  }
 
     toggleEdit(userId: number) {
       this.users = this.users.map(user =>
@@ -24,18 +44,34 @@ export class UserlistComponent {
       );
     }
 
-    assignRole(userId: number, role: string) {
+    async assignRole(userId: number, role: string) {
+
+      const res = await fetch('http://localhost:3000/editeRoleUser', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('WSToken')}`
+          },
+          body: JSON.stringify({id: userId, NewRole: role})
+        }
+      );
+
+      if(!res.ok) {
+        const data = await res.json();
+        alert(data.message);
+        return;
+      }
+
+
       this.users = this.users.map(user =>
         user.id === userId
           ? { ...user, role, showEditOptions: false }
           : user
       );
-      console.log(`Assigned ${role} role to user with ID: ${userId}`);
     }
 
     deleteUser(userId: number) {
       this.users = this.users.filter(user => user.id !== userId);
-      console.log(`Deleted user with ID: ${userId}`);
     }
 
     viewDetails(userId: number) {

@@ -6,7 +6,6 @@
       <input
         type="text"
         placeholder="Search by name..."
-        [(ngModel)]="searchQuery"
         (input)="onSearch()"
         class="search-input"
       />
@@ -21,7 +20,7 @@
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let machine of filteredMachines">
+          <tr *ngFor="let machine of machines">
               <td (click)="onDetails(machine.id)">{{ machine.name }}</td>
               <td>{{ machine.latitude }}, {{ machine.longitude }}</td>
               <td>

@@ -69,12 +69,10 @@ export class MachinelistComponent implements OnInit {
       this.machines = this.machines.filter(mat => mat.id !== id);
     }
   }
-  searchQuery = ''; // لحفظ النص الذي أدخله المستخدم
-filteredMachines = [...this.machines]; // نسخة من الآلات الأصلية لعرض النتائج
 
 onSearch() {
-  this.filteredMachines = this.machines.filter((machine) =>
-    machine.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-  );
+  // this.filteredMachines = this.machines.filter((machine) =>
+  //   machine.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+  // );
 }
 }

@@ -20,10 +20,6 @@ export class EditmachineComponent implements OnInit {
     disableDefaultUI: false,
   };
   machine: any = {};
-  on: string = '';
-  off: string = '';
-  maintenance: string = '';
-  loc: {lat: number, lng: number} | null = null;
   async ngOnInit() {
     this.route.paramMap.subscribe(async(params) => {
       this.machine = {};
@@ -45,29 +41,16 @@ export class EditmachineComponent implements OnInit {
 
       this.machine = data.machine;
 
-      this.selectedPlace = {lat: this.machine.latitude, lng: this.machine.longitude}; 
-
-      switch(this.machine) {
-        case 'on': {
-          this.on = 'selected';
-          break;
-        }
-        case 'off': {
-          this.off = 'selected';
-          break;
-        }
-        case 'maintenance': {
-          this.maintenance = 'selected';
-          break;
-        }
-      }
+      this.selectedPlace = {
+        lat: +this.machine.latitude,
+        lng: +this.machine.longitude,
+      };
     });
   }
 
   selectedPlace: { lat: number; lng: number } | null = null;
 
   onMapClick(event: google.maps.MapMouseEvent) {
-    console.log(this.selectedPlace);
     if (event.latLng) {
       this.selectedPlace = {
         lat: event.latLng.lat(),
@@ -77,7 +60,8 @@ export class EditmachineComponent implements OnInit {
   }
       
 
-    onSubmit(): void {
+    onSubmit(event: Event) {
+      event.preventDefault();
       
     }
 }

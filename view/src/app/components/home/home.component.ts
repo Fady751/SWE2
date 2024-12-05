@@ -93,7 +93,7 @@ export class HomeComponent {
       this.marker.setPosition(this.routeCoordinates[i]);
       // this.calculateRoute(this.routeCoordinates[i]);
       i--;
-    }, 250);
+    }, 125);
   }
 }
 

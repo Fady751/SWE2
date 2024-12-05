@@ -1,7 +1,7 @@
 <div class="add-machine-container">
   <h2>edit Machine</h2>
 
-  <form (ngSubmit)="onSubmit()">
+  <form (submit)="onSubmit($event)">
     <div class="form-group">
       <label for="machineName">Machine Name</label>
       <input
@@ -14,14 +14,17 @@
     </div>
 
 
-    <!-- <div class="form-group">
+    <div class="form-group">
       <label for="status">Machine Status</label>
       <select id="status" required>
-        <option value="on" {{ on }}>on</option>
-        <option value="off" {{ off }} >off</option>
-        <option value="maintenance" {{ maintenance }}>maintenance</option>
+        <option value="on" *ngIf="machine.state != 'on'">on</option>
+        <option value="on" *ngIf="machine.state == 'on'" selected>on</option>
+        <option value="off" *ngIf="machine.state != 'off'">off</option>
+        <option value="off" *ngIf="machine.state == 'off'" selected>off</option>
+        <option value="maintenance" *ngIf="machine.state != 'maintenance'">maintenance</option>
+        <option value="maintenance" *ngIf="machine.state == 'maintenance'" selected>maintenance</option>
       </select>
-    </div> -->
+    </div>
 
 
 
