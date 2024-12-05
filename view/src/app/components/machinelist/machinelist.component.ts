@@ -24,6 +24,7 @@ interface Machine {
 export class MachinelistComponent implements OnInit {
   constructor(private router: Router) { }
   machines: Machine[] = [];
+  filtered: Machine[] = [];
 
   async ngOnInit() {
     const res = await fetch('http://localhost:3000/getAllMachines');
@@ -35,7 +36,8 @@ export class MachinelistComponent implements OnInit {
 
     const data = await res.json();
 
-    this.machines = data.result;
+    this.filtered = this.machines = data.result;
+
   }
 
   addMachine() {
@@ -67,12 +69,13 @@ export class MachinelistComponent implements OnInit {
       }
       
       this.machines = this.machines.filter(mat => mat.id !== id);
+      this.filtered = this.filtered.filter(mat => mat.id !== id);
     }
   }
 
-onSearch() {
-  // this.filteredMachines = this.machines.filter((machine) =>
-  //   machine.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-  // );
+onSearch(text: string) {
+  this.filtered = this.machines.filter((machine) =>
+    machine.name.toLowerCase().includes(text.toLowerCase())
+  );
 }
 }
