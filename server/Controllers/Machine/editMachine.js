@@ -16,7 +16,7 @@ const editMachine = async(req , res)=>{
 
     const found  = (await query(`select * from machine 
         where 
-        name = '${name}' or (latitude = '${latitude}' and logitude = '${longitude}') `))[0]
+        (name = '${name}' or (latitude = ${latitude} and longitude = ${longitude})) and id != ${id}`))[0]
         
     if(found) {
       if(found.name == name )  return res.status(401).json({message : "cannot update the name!"});
