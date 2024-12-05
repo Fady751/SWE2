@@ -14,87 +14,59 @@ export class HomeComponent {
   directionsRenderer = new google.maps.DirectionsRenderer();
   socket: any = new WebSocket('ws://localhost:8080');
   routeCoordinates: any;
-  marker: any;
-  flag: any = false;
+  markers: google.maps.Marker[] = [];
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const mapOptions = {
-      center: { lat: 30.0444, lng: 31.2357 }, // Cairo
+      center: { lat: 30.0444, lng: 31.2357 },
       zoom: 12,
     };
 
     this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, mapOptions);
-    this.directionsRenderer = new google.maps.DirectionsRenderer({
-      map: this.map,
-      polylineOptions: {
-        strokeColor: '#FF0000',
-        strokeWeight: 6,
-      },
+
+    const res = await fetch('http://localhost:3000/getAllMachines');
+
+    if(!res.ok) {
+        return;
+    }
+
+    const data = await res.json();
+
+    data.result.forEach((machine: any) => {
+      this.addMarker({lat: +machine.latitude, lng: +machine.longitude}, machine.name,
+        machine.state === 'on'? 'green':  machine.state === 'off'? 'red': machine.state === 'maintenance'? 'blue': 'purple');
     });
 
-    this.calculateRoute({ lat: 30.047013909799027, lng: 31.22874736727681 }); // giza
 
-    this.marker = new google.maps.Marker({
-      map: this.map,
-      position: { lat: 30.047013909799027, lng: 31.22874736727681 },
-    });
+    // this.socket.addEventListener('message', (event: any) => {
+    //   console.log('Message from server:', event.data);
+    //   const mess = JSON.parse(event.data);
 
+    //   this.addMarker({ lat: mess.latitude, lng: mess.longitude });
+    //   this.calculateRoute({ lat: mess.latitude, lng: mess.longitude });
+    // });
+  }
+
+  addMarker(position: { lat: number; lng: number }, note: string, color: string) {
+    const customIcon = {
+      url: `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png`,
+      scaledSize: new google.maps.Size(40, 40),
+    };
   
-  this.socket.addEventListener('message', (event: any) => {
-    console.log('Message from server:', event.data);
-    
-    const mess = JSON.parse(event.data);
-    
-    this.calculateRoute({ lat: mess.latitude, lng: mess.longitude });
-  });
-
-  }
-
-  calculateRoute(destination: any) {
-    const origin = { lat: 30.0444, lng: 31.2357 }; // cairo
-    // const  = { lat: 29.9765, lng: 31.1313 };
-
-    this.directionsService.route(
-      {
-        origin,
-        destination,
-        travelMode: google.maps.TravelMode.DRIVING,
-      },
-      (response, status) => {
-        if (status === google.maps.DirectionsStatus.OK) {
-          this.directionsRenderer.setDirections(response);
-          this.routeCoordinates = this.getRouteCoordinates(response);
-        } else {
-          console.error('Directions request failed due to ' + status);
-        }
-      }
-    );
-  }
-  getRouteCoordinates(response: any) {
-    const coordinates: { lat: number; lng: number }[] = [];
-
-    const route = response.routes[0];
-    route.legs.forEach((leg: any) => {
-      leg.steps.forEach((step: any) => {
-        step.lat_lngs.forEach((latLng: any) => {
-          coordinates.push({ lat: latLng.lat(), lng: latLng.lng() });
-        });
-      });
+    const marker = new google.maps.Marker({
+      map: this.map,
+      position: position,
+      icon: customIcon,
     });
-
-    return coordinates;
-  }
-
-  Move() {
-    let i = this.routeCoordinates.length - 1;
-    const interval = setInterval (()=>{
-      if(i == -1) clearInterval(interval);
-      console.log(this.routeCoordinates[i]);
-      this.marker.setPosition(this.routeCoordinates[i]);
-      // this.calculateRoute(this.routeCoordinates[i]);
-      i--;
-    }, 125);
+  
+    const infoWindow = new google.maps.InfoWindow({
+      content: `<div style="color: black; font-size: 14px;">${note}</div>`,
+    });
+  
+    marker.addListener('click', () => {
+      infoWindow.open(this.map, marker);
+    });
+  
+    this.markers.push(marker);
   }
 }
-
-
