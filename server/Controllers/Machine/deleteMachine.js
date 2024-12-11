@@ -7,7 +7,6 @@ const DeleteMachine = async(req , res)=>{
 
     const MachineId = req.body.id ;
     
-    
     try{
         const found  = await query(`select * from machine where id = ${MachineId}`);
         if(!found[0]) return res.status(401).json({message : "machine with this id not found"});

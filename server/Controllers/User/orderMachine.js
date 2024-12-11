@@ -7,10 +7,18 @@ const {WebSocket} = require('ws')
 
 const notification = new WebSocket.Server({ port: 8081 });
 
+notification.on("connection" , client =>{
+    client.on('message' , (mesg) =>{
+      ID = +mesg 
+      client.userID = ID 
+      client.send("Data recieved!")
+    });
+})
+
 const OrderMachine = async (req, res) => {
     try {
       const user = req.user;
-      const { latitude, longitude } = req.body;
+      const { latitude, longitude , orderList } = req.body;
   
       const queryResult = await pool.query('SELECT id, name, latitude, longitude FROM machine WHERE state = $1', ['on']);
       const machines = queryResult.rows;
@@ -68,23 +76,43 @@ const OrderMachine = async (req, res) => {
 
       const content = "The machine is on its way to you.";
       const content2 = "The machine has arrived.";
+      let check = 0 ;
   
-    //   console.log(`INSERT INTO notification(user_id, machine_id, content) VALUES(${user.id}, ${nearestMachine.id}, '${content}')`);
+      notification.clients.forEach( cl => {
+        if(cl.userID == user.id){
+          check = 1 
+          return cl.send(content);
+        }
+      });
+
+      if(!check) return res.status(404).json({message : "User_ID is not found"})
+
       await query(`INSERT INTO notification(user_id, machine_id, content) VALUES(${user.id}, ${nearestMachine.id}, '${content}')`);
-          
+      await query(`UPDATE machine SET state = 'inOrder' WHERE id = ${nearestMachine.id}`);   
+    
+      await query(`insert into orders (user_id ,  machine_id , list ) values ( ${user.id} ,${nearestMachine.id} , '{${orderList}}' )`)
+
       // Move machine along the route
       let i = route.length - 1;
       const interval = setInterval(async () => {
         if (i < 0) {
+          await query(`update orders set confirmed = TRUE where user_id = ${user.id} and machine_id =  ${nearestMachine.id} and list = '{${orderList}}' and confirmed= FALSE `)
+          await query(`UPDATE machine SET state = 'on' WHERE id = ${nearestMachine.id}`);
           await query(`INSERT INTO notification(user_id, machine_id, content) VALUES(${user.id}, ${nearestMachine.id}, '${content2}')`);
+          notification.clients.forEach( cl => {
+            if(cl.userID == user.id){
+              return cl.send(content2);
+            }
+          });
           clearInterval(interval);
+
         } else {
             // console.log(route[i]);
           await query(`UPDATE machine SET latitude = ${route[i].lat}, longitude = ${route[i].lng} WHERE id = ${nearestMachine.id}`);
           i--;
         }
       }, 1000);
-  
+
       return res.status(200).json({
         nearestMachine,
         distance: minDistance

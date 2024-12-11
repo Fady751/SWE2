@@ -3,14 +3,14 @@ const path = require('path');
 const {query, pool} = require('./config/data_base');
 const jwt = require('jsonwebtoken');
 const WebSocket = require('ws');
-const cors = require('cors')
+const cors = require('cors');
+const { TIMEOUT } = require('dns');
 // const multer = require('multer')
 
 const app = express();
 const port = 3000;
 const host = 'localhost';
 const machine = new WebSocket.Server({ port: 8080 }); // add, remove, moved on map(edit)
-
  
 
 app.use(cors());
@@ -29,7 +29,6 @@ app.use('/getmaterial', require('./Routers/Material/getAllMatrials'));
 app.use('/getcategories', require('./Routers/Material/getAllCategories'));
 app.use('/machine', require('./Routers/Machine/getMachine'));
 app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
-app.use('/selectMaterial' , require('./Routers/User/selectMaterial'));
 app.use('/ordermachine' , require('./Routers/User/orderMachine'));
 app.use('/notifications' , require('./Routers/User/getNotifications'));
 
@@ -92,6 +91,17 @@ app.use('/notifications' , require('./Routers/User/getNotifications'));
         });
     });
 })();
+
+setInterval(async() => {
+    await query(`update machine set sort = true `)
+}, 600000);
+
+setInterval(async() => {
+    await query(`update machine set state = "on" where state = "maintenance" `)
+    setTimeout(async() => {
+        await query(`update machine set state = "maintenance" where state = "on" `)
+    } ,240000);
+} , 600000);
 
 
 app.listen(port, host, async(err) => {
