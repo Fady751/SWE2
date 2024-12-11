@@ -17,9 +17,30 @@ export class HomeComponent {
   markers: { id: number; marker: google.maps.Marker }[] = [];
   selected: { lat: number; lng: number } | null = null; // Stores the selected point
 
+  getCurrentLocation(): Promise<{ lat: number; lng: number }> {
+    return new Promise((resolve, reject) => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          (error) => {
+            reject(`Geolocation error: ${error.message}`);
+          }
+        );
+      } else {
+        reject('Geolocation is not supported by this browser.');
+      }
+    });
+  }
+
   async ngOnInit(): Promise<void> {
+    const curr = await this.getCurrentLocation();
     const mapOptions = {
-      center: { lat: 30.0444, lng: 31.2357 },
+      center: curr,
       zoom: 12,
     };
 
@@ -27,6 +48,10 @@ export class HomeComponent {
       document.getElementById('map') as HTMLElement,
       mapOptions
     );
+
+    
+    this.addMarker(-2, curr, 'user', '');
+    console.log(curr);
 
     const res = await fetch('http://localhost:3000/getAllMachines');
 

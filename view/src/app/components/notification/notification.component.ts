@@ -31,6 +31,7 @@ export class NotificationComponent implements OnInit {
       const data = await res.json();
 
       this.notifications = data.result;
+      this.notifications.reverse();
     });
   }
   clearNotifications() {
