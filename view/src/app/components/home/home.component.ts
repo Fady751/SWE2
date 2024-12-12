@@ -50,7 +50,7 @@ export class HomeComponent {
     );
 
     
-    this.addMarker(-2, curr, 'user', '');
+    this.addMarker(-2, curr, 'user', 'yellow');
     console.log(curr);
 
     const res = await fetch('http://localhost:3000/getAllMachines');
