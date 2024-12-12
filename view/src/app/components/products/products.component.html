@@ -34,8 +34,11 @@
 </div>
 
 
+<p *ngIf="err" class="alert alert-danger text-center rounded p-3 mb-3">
+  <i class="bi bi-exclamation-circle"></i> {{ err }}
+</p>
 
 <div class="d-flex justify-content-between mt-4">
-  <button class="btn btn-left">Discard</button>
-  <button class="btn btn-right">Confirm</button>
+  <button class="btn btn-left" (click)="Discard()">Discard</button>
+  <button class="btn btn-right" (click)="Confirm()">Confirm</button>
 </div>
