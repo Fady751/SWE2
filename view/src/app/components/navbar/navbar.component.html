@@ -5,7 +5,8 @@
   </div>
 
   <div class="notification">
-    <img *ngIf="user" (click)="onNotification()" src="images/not.png" alt="Profile Photo" />
+    <img *ngIf="user && !haveNotification" (click)="onNotification()" src="images/not.png" alt="Profile Photo" />
+    <img *ngIf="user && haveNotification" (click)="onNotification()" src="images/ringing.png" alt="Profile Photo" />
 
   </div>
 

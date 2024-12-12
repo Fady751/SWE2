@@ -4,8 +4,8 @@
     <select id="category" class="form-control" #idSelect (change)="filter(idSelect.value)">
       <option selected value="all">All categories</option>
       @for (category of categories; track $index) {
-          <option [value]="category">
-              {{ category }}
+          <option [value]="category.name">
+              {{ category.name }}
           </option>
       }
     </select>

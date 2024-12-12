@@ -11,7 +11,8 @@ notification.on("connection" , client =>{
     client.on('message' , (mesg) =>{
       ID = +mesg 
       client.userID = ID 
-      client.send("Data recieved!")
+      console.log(`user with id = ${mesg} have connected.`)
+      // client.send("Data recieved!")
     });
 })
 
@@ -97,7 +98,7 @@ const OrderMachine = async (req, res) => {
       const interval = setInterval(async () => {
         if (i < 0) {
           await query(`update orders set confirmed = TRUE where user_id = ${user.id} and machine_id =  ${nearestMachine.id} and list = '{${orderList}}' and confirmed= FALSE `)
-          await query(`UPDATE machine SET state = 'on' WHERE id = ${nearestMachine.id}`);
+          await query(`UPDATE machine SET state = 'on', sort = false WHERE id = ${nearestMachine.id}`);
           await query(`INSERT INTO notification(user_id, machine_id, content) VALUES(${user.id}, ${nearestMachine.id}, '${content2}')`);
           notification.clients.forEach( cl => {
             if(cl.userID == user.id){

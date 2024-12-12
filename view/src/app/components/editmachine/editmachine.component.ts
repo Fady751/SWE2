@@ -45,6 +45,10 @@ export class EditmachineComponent implements OnInit {
         lat: +this.machine.latitude,
         lng: +this.machine.longitude,
       };
+      this.center = {
+        lat: +this.machine.latitude,
+        lng: +this.machine.longitude,
+      };
     });
   }
 

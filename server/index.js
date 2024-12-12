@@ -92,16 +92,6 @@ app.use('/notifications' , require('./Routers/User/getNotifications'));
     });
 })();
 
-setInterval(async() => {
-    await query(`update machine set sort = true `)
-}, 600000);
-
-setInterval(async() => {
-    await query(`update machine set state = "on" where state = "maintenance" `)
-    setTimeout(async() => {
-        await query(`update machine set state = "maintenance" where state = "on" `)
-    } ,240000);
-} , 600000);
 
 
 app.listen(port, host, async(err) => {
@@ -109,5 +99,17 @@ app.listen(port, host, async(err) => {
         console.error('Server error:', err);
         process.exit(-1);
     }
+    setInterval(async() => {
+        await query(`update machine set sort = true `)
+    }, 600000);
+    
+    setInterval(async() => {
+        // console.log('on');
+        await query(`update machine set state = 'maintenance' where state = 'on' `)
+        setTimeout(async() => {
+            // console.log('maintenance');
+        await query(`update machine set state = 'on' where state = 'maintenance' `)
+        } , .25 * 60000);
+    } , .5 * 60000);
     console.log(`App running at http://${host}:${port}`);
 });

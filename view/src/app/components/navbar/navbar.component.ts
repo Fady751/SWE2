@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
@@ -11,8 +11,18 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent  {
+export class NavbarComponent implements OnInit {
   @Input({required: true}) user: any;
+  @Input({required: true}) notification: any;
+  haveNotification: boolean = false;
+
+  ngOnInit(): void {
+    
+    this.notification.addEventListener('message', (event: any) => {
+      const message = event.data;
+      this.haveNotification = true;
+    });
+  }
 
   isSlideOut = true;
   notfication = true;
@@ -61,6 +71,7 @@ export class NavbarComponent  {
   }
   onNotification(){
     this.isSlideOut = true;
+    this.haveNotification = false;
     this.router.navigate(['/notification', this.user.id]);
   }
 }

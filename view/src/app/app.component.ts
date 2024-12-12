@@ -18,11 +18,15 @@ export class AppComponent implements OnInit {
   constructor(private route: Router, private userService: UserService) { }
 
   user: any = null;
+  notification: any = new WebSocket('ws://localhost:8081');
 
   async ngOnInit(): Promise<void> {
     this.user = await this.userService.getUser();
     this.userService.data$.subscribe(async(data) => {
       this.user = await this.userService.getUser();
+      if(this.user.id) {
+        this.notification.send(this.user.id);
+      }
     });
   }
 }
