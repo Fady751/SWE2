@@ -14,6 +14,7 @@ import { UserdetialsComponent } from './components/userdetials/userdetials.compo
 import { loginAuthGuard } from '../auth/login-auth.guard';
 import { adminAuthGuard } from '../auth/admin-auth.guard';
 import { NotificationComponent } from './components/notification/notification.component';
+import { HistoryComponent } from './components/history/history.component';
 
 export const routes: Routes = [
   {path : 'home', component:HomeComponent},
@@ -28,6 +29,7 @@ export const routes: Routes = [
   {path : 'addmachine', component:AddmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'editmachine/:id', component:EditmachineComponent, canActivate:[adminAuthGuard]},
   {path : 'notification/:id', component:NotificationComponent, canActivate:[loginAuthGuard]},
+  {path : 'history', component:HistoryComponent, canActivate:[loginAuthGuard]},
   {path : '', pathMatch: 'full', redirectTo:'home'},
   {path : '**', component:PageNotFoundComponent}
 
