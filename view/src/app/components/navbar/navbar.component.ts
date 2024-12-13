@@ -20,6 +20,8 @@ export class NavbarComponent implements OnInit {
     
     this.notification.addEventListener('message', (event: any) => {
       const message = event.data;
+      const sound = new Audio('ringing.mp3');
+      sound.play();
       this.haveNotification = true;
     });
   }

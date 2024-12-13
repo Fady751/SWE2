@@ -7,6 +7,7 @@ export const loginAuthGuard: CanActivateFn = async(route, state) => {
   const userService = new UserService();
   const user = await userService.getUser(); 
   if(user) return true;
-  router.navigate(['/home']);
+  alert('please login first.')
+  router.navigate(['/login']);
   return false;
 };

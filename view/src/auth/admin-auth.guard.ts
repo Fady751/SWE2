@@ -8,6 +8,7 @@ export const adminAuthGuard: CanActivateFn = async(route, state) => {
   const user = await userService.getUser(); 
   // console.log(user && user.role === "Admin");
   if(user && user.role === "Admin") return true;
+  alert(`you don't have the privilege.`)
   router.navigate(['/home']);
   return false;
 };
