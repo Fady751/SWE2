@@ -25,9 +25,9 @@
           <p>Recycle: {{ prod.recyclable ? 'Yes' : 'No' }}</p>
           </div>
           <div class="card-counter">
-          <button class="negative" (click)="decreaseCounter($index)">-</button>
-          <span>{{ counter[$index] }}</span>
-          <button class="plus" (click)="increaseCounter($index)">+</button>
+          <button class="negative" (click)="decreaseCounter(prod.id)">-</button>
+          <span>{{ counter[prod.id] }}</span>
+          <button class="plus" (click)="increaseCounter(prod.id)">+</button>
           </div>
       </div>
   }

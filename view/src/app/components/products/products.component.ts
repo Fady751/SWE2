@@ -12,14 +12,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductsComponent implements OnInit {
     constructor(private router: Router, private route: ActivatedRoute) { }
-    counter: number[] = [];
+    counter: any = {};
     categories: any[] = [];
     products: any[] = []
     material: any[] = [];
 
     decreaseCounter(i: number) {
         if(this.counter[i] > 0)
-        this.counter[i]--;
+            this.counter[i]--;
     }
     increaseCounter(i: number) {
         this.counter[i]++;
@@ -41,7 +41,8 @@ export class ProductsComponent implements OnInit {
         const res = await fetch('http://localhost:3000/getmaterial');
         const data = await res.json();
         this.products = this.material = data.result;
-        this.counter = Array(this.products.length).fill(0);
+
+        this.products.forEach(pro => this.counter[pro.id] = 0);
 
         const res2 = await fetch('http://localhost:3000/getcategories');
         const data2 = await res2.json();
@@ -50,9 +51,9 @@ export class ProductsComponent implements OnInit {
 
     async Confirm() {
         const data = Array();
-        for(let i = 0; i < this.counter.length; i++) {
-            for(let j = 0; j < this.counter[i]; j++) {
-                data.push(this.products[i].id);
+        for (const [key, value] of Object.entries(this.counter)) {
+            for(let j = 0; j < Number(value); j++) {
+                data.push(Number(key));
             }
         }
         if(data.length === 0) {

@@ -28,6 +28,7 @@ export class HistoryComponent implements OnInit {
       return;
     }
     this.orders = this.user.odrers;
+    this.orders.reverse();
   }
 
 
