@@ -99,6 +99,6 @@ export class UserProfileComponent implements OnInit {
   
 
   viewHistory() {
-    
+    this.route.navigateByUrl('history')
   }
 }

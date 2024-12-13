@@ -45,10 +45,6 @@ export class NavbarComponent implements OnInit {
     this.userService.updateApp();
     this.router.navigate(['/login']);
   }
-  onCallMachine(){
-    this.isSlideOut = true;
-    this.router.navigate(['/callMachine']);
-  }
   onMachinesList(){
     this.isSlideOut = true;
     this.router.navigate(['/machinelist']);

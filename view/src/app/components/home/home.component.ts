@@ -55,7 +55,6 @@ export class HomeComponent {
     
     this.selected = {lat: curr.lat, lng: curr.lng};
     this.addTemporaryMarker(this.selected);
-    console.log(curr);
 
     const res = await fetch('http://localhost:3000/getAllMachines');
 
@@ -76,7 +75,7 @@ export class HomeComponent {
           ? 'red'
           : machine.state === 'maintenance'
           ? 'blue'
-          : 'purple'
+          : 'orange'
       );
     });
 
@@ -103,7 +102,7 @@ export class HomeComponent {
             ? 'red'
             : machine.state === 'maintenance'
             ? 'blue'
-            : 'purple'
+            : 'orange'
         );
       }
     });

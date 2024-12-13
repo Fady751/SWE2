@@ -14,7 +14,7 @@
         <tr (click)="toggleDetails(order.id)" [class.selected-row]="expandedOrderId === order.id">
           <td>{{ order.id }}</td>
           <td>{{ order.machineName }}</td>
-          <td>{{ order.status }}</td>
+          <td [style]="order.status? 'color: green': 'color: red'">{{ order.status? 'Confirmed': 'Not confirmed yet' }}</td>
         </tr>
         <tr *ngIf="expandedOrderId === order.id" class="details-row">
           <td colspan="3" class="details">
