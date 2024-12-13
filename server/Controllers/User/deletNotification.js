@@ -8,8 +8,6 @@ const DeleteNotifications= async(req , res)=>{
         const user = req.user ;
 
         try{
-            const notifications = await query(`select * from notification where user_id = ${user.id}`)
-            if(!notifications[0]) return res.status(200).json({message : "Done"})
             await query(`delete from notification where user_id = ${user.id}`)
             return res.status(200).json({Message: "deleted successfully"})
         }

@@ -34,8 +34,16 @@ export class NotificationComponent implements OnInit {
       this.notifications.reverse();
     });
   }
-  clearNotifications() {
-    this.notifications = [];
+  async clearNotifications() {
+    const res = await fetch('http://localhost:3000/deletNotification', {
+      method: "DELETE",
+      headers: {
+        'Authorization': `${localStorage.getItem('WSToken')}`
+      }
+    });
+    if(res.ok) {
+      this.notifications = [];
+    }
   }
 
 }
