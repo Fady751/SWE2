@@ -1,6 +1,7 @@
 import { Component, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -10,10 +11,11 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit {
-
+    constructor(private router: Router, private route: ActivatedRoute) { }
     counter: number[] = [];
     categories: any[] = [];
-
+    products: any[] = []
+    material: any[] = [];
 
     decreaseCounter(i: number) {
         if(this.counter[i] > 0)
@@ -30,20 +32,51 @@ export class ProductsComponent implements OnInit {
         this.material = this.products.filter((mat) => mat.categoryname === name);
     }
 
-    products: any[] = []
-    material: any[] = [];
-    
+    err: string = ''
+    selected: {lat: number, lng: number} | null = null;
     async ngOnInit() {
+        this.route.paramMap.subscribe(async(params) => {
+            this.selected = {lat: Number(params.get('lat')), lng: Number(params.get('lng'))}
+        })
         const res = await fetch('http://localhost:3000/getmaterial');
-        
         const data = await res.json();
         this.products = this.material = data.result;
         this.counter = Array(this.products.length).fill(0);
 
         const res2 = await fetch('http://localhost:3000/getcategories');
-        
         const data2 = await res2.json();
         this.categories = data2.result;
+    }
+
+    async Confirm() {
+        const data = Array();
+        for(let i = 0; i < this.counter.length; i++) {
+            for(let j = 0; j < this.counter[i]; j++) {
+                data.push(this.products[i].id);
+            }
+        }
+        if(data.length === 0) {
+            this.err = 'Choose at least one material.';
+            return;
+        }
+        const res = await fetch(`http://localhost:3000/ordermachine`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${localStorage.getItem('WSToken')}`,
+            },
+            body: JSON.stringify({latitude: this.selected?.lat, longitude: this.selected?.lng, orderList: data})
+        });
+
+        if(res.ok) {
+            this.router.navigateByUrl('home');
+        }
+        this.err = (await res.json()).message;
+
+    }
+    Discard() {
+        if(confirm('are you sure you need to discard?'))
+            this.router.navigateByUrl('home');
     }
 }
 

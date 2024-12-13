@@ -1,14 +1,17 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [GoogleMapsModule],
+  imports: [GoogleMapsModule, NgIf],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  constructor(private router: Router) { }
   map!: google.maps.Map;
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
@@ -50,7 +53,8 @@ export class HomeComponent {
     );
 
     
-    this.addMarker(-2, curr, 'user', 'yellow');
+    this.selected = {lat: curr.lat, lng: curr.lng};
+    this.addTemporaryMarker(this.selected);
     console.log(curr);
 
     const res = await fetch('http://localhost:3000/getAllMachines');
@@ -110,7 +114,7 @@ export class HomeComponent {
 
       if (latLng) {
         this.selected = { lat: latLng.lat(), lng: latLng.lng() };
-        this.addTemporaryMarker(this.selected); // Add a temporary marker to show the selected point
+        this.addTemporaryMarker(this.selected);
       }
     });
   }
@@ -164,26 +168,13 @@ export class HomeComponent {
     this.markers.push({ id: -1, marker }); // -1 is the ID for temporary markers
   }
 
+  err: string = '';
   async call() {
+    this.err = ''
     if (!this.selected) {
-      alert('Please select a point on the map.');
+      this.err = 'Please select a point on the map.';
       return;
     }
-
-    const res = await fetch(`http://localhost:3000/ordermachine`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('WSToken')}`,
-      },
-      body: JSON.stringify({latitude: this.selected.lat, longitude: this.selected.lng}),
-    });
-
-    if (res.ok) {
-      alert('Machine is on its way!');
-    } else {
-      const data = await res.json();
-      alert('Failed to call the machine. Please try again' + data.message);
-    }
+    this.router.navigateByUrl(`products/${this.selected.lat}/${this.selected.lng}`);
   }
 }

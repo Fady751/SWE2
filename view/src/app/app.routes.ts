@@ -22,7 +22,7 @@ export const routes: Routes = [
   {path : 'signup', component:SignupComponent},
   {path : 'userProfile', component:UserProfileComponent, canActivate:[loginAuthGuard]},
   {path : 'userlist', component:UserlistComponent, canActivate:[adminAuthGuard]},
-  {path : 'products', component:ProductsComponent, canActivate:[loginAuthGuard]},
+  {path : 'products/:lat/:lng', component:ProductsComponent, canActivate:[loginAuthGuard]},
   {path : 'machinelist',component: MachinelistComponent, canActivate:[adminAuthGuard]},
   {path: 'userdetials/:id',component:UserdetialsComponent, canActivate:[adminAuthGuard]},
   {path : 'detailsmachine/:id', component:DetailsmachineComponent, canActivate:[adminAuthGuard]},

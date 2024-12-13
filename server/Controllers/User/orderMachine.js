@@ -19,38 +19,40 @@ notification.on("connection" , client =>{
 const OrderMachine = async (req, res) => {
     try {
       const user = req.user;
-      const { latitude, longitude , orderList } = req.body;
-  
+      const { latitude, longitude, orderList } = req.body;
+    
       const queryResult = await pool.query('SELECT id, name, latitude, longitude FROM machine WHERE state = $1', ['on']);
       const machines = queryResult.rows;
-  
+    
       if (machines.length === 0) {
         return res.status(404).json({ message: 'No machines available' });
       }
-  
+    
       const origins = `${latitude},${longitude}`;
       const destinations = machines.map(m => `${m.latitude},${m.longitude}`).join('|');
+    
       const apiKey = 'AIzaSyB6Xr0KQ_nJN3JT_SfPB91eo0McmAPSTjY';
       const distanceMatrixUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinations}&key=${apiKey}`;
-  
       const distanceResponse = await fetch(distanceMatrixUrl);
       const distanceData = await distanceResponse.json();
-  
+    
+    
       if (distanceData.status !== 'OK') {
         return res.status(500).json({ message: 'Error fetching distances from Google Maps API' });
       }
-  
+    
       const distances = distanceData.rows[0].elements;
+    
       let nearestMachine = null;
       let minDistance = Infinity;
-  
+    
       distances.forEach((distanceInfo, index) => {
         if (distanceInfo.status === 'OK' && distanceInfo.distance.value < minDistance) {
           minDistance = distanceInfo.distance.value;
           nearestMachine = machines[index];
         }
       });
-  
+    
       if (!nearestMachine) {
         return res.status(404).json({ message: 'No nearby machine found' });
       }
@@ -98,7 +100,7 @@ const OrderMachine = async (req, res) => {
       const interval = setInterval(async () => {
         if (i < 0) {
           await query(`update orders set confirmed = TRUE where user_id = ${user.id} and machine_id =  ${nearestMachine.id} and list = '{${orderList}}' and confirmed= FALSE `)
-          await query(`UPDATE machine SET state = 'on', sort = false WHERE id = ${nearestMachine.id}`);
+          await query(`UPDATE machine SET state = 'on', sorted = false WHERE id = ${nearestMachine.id}`);
           await query(`INSERT INTO notification(user_id, machine_id, content) VALUES(${user.id}, ${nearestMachine.id}, '${content2}')`);
           notification.clients.forEach( cl => {
             if(cl.userID == user.id){
