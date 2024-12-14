@@ -3,18 +3,7 @@ const { error } = require('console');
 const bodyParser = require('body-parser');
 const { query ,  pool} = require('../../config/data_base'); 
 const {client} = require('pg')
-const {WebSocket} = require('ws')
-
-const notification = new WebSocket.Server({ port: 8081 });
-
-notification.on("connection" , client =>{
-    client.on('message' , (mesg) =>{
-      ID = +mesg 
-      client.userID = ID 
-      console.log(`user with id = ${mesg} have connected.`)
-      // client.send("Data recieved!")
-    });
-})
+const notification = require('../../Helper/notification')
 
 const OrderMachine = async (req, res) => {
     try {

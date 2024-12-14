@@ -16,12 +16,12 @@ export class NavbarComponent implements OnInit {
   @Input({required: true}) notification: any;
   haveNotification: boolean = false;
 
+  sound = new Audio('ringing.mp3');
   ngOnInit(): void {
     
     this.notification.addEventListener('message', (event: any) => {
       const message = event.data;
-      const sound = new Audio('ringing.mp3');
-      sound.play();
+      this.sound.play();
       this.haveNotification = true;
     });
   }

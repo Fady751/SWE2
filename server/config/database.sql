@@ -46,7 +46,7 @@ CREATE TABLE orders (
     list INT[]
 );
 CREATE TABLE last_report(
-    machine_id INT REFERENCES machine(id) ON DELETE SET NULL,
+    machine_id INT UNIQUE REFERENCES machine(id) ON DELETE SET NULL,
     content TEXT 
 );
 

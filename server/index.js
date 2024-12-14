@@ -115,7 +115,7 @@ app.use('/report' , require('./Routers/User/Report'));
             console.error('Error updating machine states:', error);
         }
     }, 0.5 * 60000);
-})()
+})
 
 
 app.listen(port, host, async(err) => {
