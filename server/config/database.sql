@@ -54,7 +54,8 @@ CREATE TABLE notification (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE SET NULL,
     machine_id INT REFERENCES machine(id) ON DELETE SET NULL,
-    content TEXT
+    content TEXT,
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE OR REPLACE FUNCTION notify_machine_addition()

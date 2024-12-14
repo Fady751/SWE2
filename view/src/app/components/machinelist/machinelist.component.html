@@ -31,6 +31,9 @@
                   <button (click)="deleteMachine(machine.id)" class="icon-btn delete-btn">
                       <i class="fas fa-trash"></i>
                   </button>
+                  <button *ngIf="!machine.sorted" (click)="sortMachineMaterial(machine.id)" class="icon-btn">
+                    <i class="fa-solid fa-layer-group"></i>
+                  </button>
               </td>
           </tr>
       </tbody>

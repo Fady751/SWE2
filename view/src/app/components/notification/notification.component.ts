@@ -31,7 +31,11 @@ export class NotificationComponent implements OnInit {
       const data = await res.json();
 
       this.notifications = data.result;
-      this.notifications.reverse();
+      this.notifications.sort((a, b) => {
+        const timeA = new Date(a.time).getTime();
+        const timeB = new Date(b.time).getTime();
+        return timeB - timeA;
+      });
     });
   }
   async clearNotifications() {

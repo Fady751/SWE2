@@ -10,8 +10,8 @@
     <li *ngFor="let notification of notifications" class="notification-item">
       <h2>{{ notification.title }}</h2>
       <p [style.white-space]="'pre'">{{ notification.description }}</p>
-      <span>{{ notification.timestamp | date: 'short' }}</span>
-      <!-- <span *ngIf="!notification.timestamp">Invalid date</span> -->
+      <span>{{ notification.time | date: 'short' }}</span>
+      <span *ngIf="!notification.time">Invalid date</span>
     </li>
   </ul>
 </div>

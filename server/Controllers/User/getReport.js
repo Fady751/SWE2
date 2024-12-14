@@ -19,7 +19,7 @@ try {
         }
         return machineQuery[0];
     }
-    const machine = getMachine(MachineId);
+    const machine = await getMachine(MachineId);
 
     if(!machine)
         return res.status(404).json({message: "machine not found."});
@@ -77,7 +77,7 @@ try {
     }
     setTimeout(async() => {
         
-        const machine1 = getMachine(MachineId);
+        const machine1 = await getMachine(MachineId);
 
         let content = ``;
         if(!machine1) {
@@ -86,7 +86,7 @@ try {
         else if(Data.length === 0) {
             content = `Machine ${machine1.name} have no material.`
         }
-        else if(!machine1.sorted) {
+        else if(machine1.sorted) {
             content = `machine is sorted and has\nrecyclable:`
             Object.entries(recyclable).forEach(async([key, value]) => {
                 content += `\n\t${key}: ${value}`;

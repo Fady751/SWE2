@@ -36,4 +36,14 @@ export class DetailsmachineComponent implements OnInit {
       this.machine = data.machine;
     });
   }
+  async report() {
+    const res = await fetch('http://localhost:3000/report', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('WSToken')}`
+      },
+      body: JSON.stringify({id: this.machine.id})
+    });
+  }
 }

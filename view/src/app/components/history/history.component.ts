@@ -28,7 +28,9 @@ export class HistoryComponent implements OnInit {
       return;
     }
     this.orders = this.user.odrers;
-    this.orders.reverse();
+    this.orders.sort((a: any, b: any) => {
+      return b.id - a.id;
+    });
   }
 
 

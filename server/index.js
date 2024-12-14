@@ -33,6 +33,7 @@ app.use('/ordermachine' , require('./Routers/User/orderMachine'));
 app.use('/notifications' , require('./Routers/User/getNotifications'));
 app.use('/deletNotification' , require('./Routers/User/deletNotifications'));
 app.use('/report' , require('./Routers/User/Report'));
+app.use('/sortMachine' , require('./Routers/Machine/sortMachine'));
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -69,8 +70,9 @@ app.use('/report' , require('./Routers/User/Report'));
 (async()=>{
     const pgClient = await pool.connect(); 
     await pgClient.query(`listen machine_update `)
-    pgClient.on('notification', (msg) => {
+    pgClient.on('notification', async(msg) => {
         let data  = JSON.parse(msg.payload);
+        await query(`DELETE FROM last_report WHERE machine_id = ${data.id}`);
         data.type = "update"
         machine.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
@@ -95,10 +97,6 @@ app.use('/report' , require('./Routers/User/Report'));
 })();
 
 (async()=>{
-    setInterval(async() => {
-        await query(`update machine set sorted = true `)
-    }, 5 * 60000);
-    
     setInterval(async () => {
         try {
             const randomMachines = await query(`SELECT id FROM machine WHERE state = 'on' ORDER BY RANDOM() LIMIT 5`);
@@ -110,12 +108,14 @@ app.use('/report' , require('./Routers/User/Report'));
     
             setTimeout(async () => {
                 await query(`UPDATE machine SET state = 'on' WHERE id IN (${machineIds.join(',')})`);
+                await query(`UPDATE orders SET maintained = true WHERE machine_id IN (${machineIds.join(',')})`);
+                await query(`DELETE FROM last_report WHERE machine_id IN (${machineIds.join(',')})`);
             }, 0.25 * 60000);
         } catch (error) {
             console.error('Error updating machine states:', error);
         }
-    }, 0.5 * 60000);
-})
+    }, 2.5 * 60000);
+})()
 
 
 app.listen(port, host, async(err) => {

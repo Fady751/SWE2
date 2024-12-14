@@ -9,7 +9,7 @@ interface Machine {
   latitude: number;
   longitude: number;
   state: string;
-  sorted: string;
+  sorted: boolean;
   estimatedtime: Date;
 }
 @Component({
@@ -70,6 +70,30 @@ export class MachinelistComponent implements OnInit {
       
       this.machines = this.machines.filter(mat => mat.id !== id);
       this.filtered = this.filtered.filter(mat => mat.id !== id);
+    }
+  }
+  async sortMachineMaterial(id: number) {
+    if (confirm('did you want to sort this machine?')) {
+      const res = await fetch(`http://localhost:3000/sortMachine`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('WSToken')}`
+        },
+        body: JSON.stringify({id})
+      });
+
+      const result = await res.json();
+
+      if(!res.ok) {
+        alert(result.message);
+        return;
+      }
+      this.machines.map((machine)=>{
+        if(machine.id == id) {
+          machine.sorted = true;
+        }
+      })
     }
   }
 
