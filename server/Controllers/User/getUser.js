@@ -9,6 +9,7 @@ const GetUser = async(req, res)=>{
     const user = req.user;
     const DataOwnerId = req.query.id? req.query.id: user.id;
     if(user.id == DataOwnerId || user.role == 'Admin'){
+
         try{
             const Data = await query(`select
                 orders.id AS id , orders.list AS materials , orders.confirmed AS status, machine.name AS machineName
@@ -19,7 +20,7 @@ const GetUser = async(req, res)=>{
                 materials.id AS id , materials.name as name, category.name as categoryname, category.recyclable as recyclable, materials.url_photo url_photo
                 FROM materials JOIN category ON  
                 materials.cat_id = category.id`);
-
+ 
             Data.forEach((order) => {
                 const list = [...order.materials]
                 order.materials = []

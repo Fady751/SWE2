@@ -32,6 +32,7 @@ app.use('/getAllMachines', require('./Routers/Machine/getAllMachines'));
 app.use('/ordermachine' , require('./Routers/User/orderMachine'));
 app.use('/notifications' , require('./Routers/User/getNotifications'));
 app.use('/deletNotification' , require('./Routers/User/deletNotifications'));
+app.use('/report' , require('./Routers/User/Report'));
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {

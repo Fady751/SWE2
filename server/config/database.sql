@@ -24,14 +24,12 @@ CREATE TABLE machine (
     estimatedTime TIME
 );
 
--- Create the 'category' table
 CREATE TABLE category (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     recyclable BOOLEAN DEFAULT FALSE
 );
 
--- Create the 'materials' table
 CREATE TABLE materials (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -39,16 +37,19 @@ CREATE TABLE materials (
     url_photo TEXT
 );
 
--- Create the 'orders' table
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE SET NULL,
     machine_id INT REFERENCES machine(id) ON DELETE SET NULL,
     confirmed BOOLEAN DEFAULT FALSE,
+    maintained BOOLEAN DEFAULT FALSE , 
     list INT[]
 );
+CREATE TABLE last_report(
+    machine_id INT REFERENCES machine(id) ON DELETE SET NULL,
+    content TEXT 
+);
 
--- Create the 'notification' table
 CREATE TABLE notification (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE SET NULL,
@@ -56,11 +57,10 @@ CREATE TABLE notification (
     content TEXT
 );
 
--- Trigger function for machine INSERT
 CREATE OR REPLACE FUNCTION notify_machine_addition()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Notify the backend about the machine insertion
+    
     PERFORM pg_notify('machine_add', json_build_object(
         'id', NEW.id,
         'name', NEW.name,
@@ -72,17 +72,15 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger for machine INSERT
+
 CREATE TRIGGER add_machine
 AFTER INSERT ON machine
 FOR EACH ROW
 EXECUTE FUNCTION notify_machine_addition();
 
--- Trigger function for machine UPDATE
 CREATE OR REPLACE FUNCTION notify_machine_update()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Notify the backend about the machine update
     PERFORM pg_notify('machine_update', json_build_object(
         'id', NEW.id,
         'name', NEW.name,
@@ -96,17 +94,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger for machine UPDATE
 CREATE TRIGGER update_machine
 AFTER UPDATE ON machine
 FOR EACH ROW
 EXECUTE FUNCTION notify_machine_update();
 
--- Trigger function for machine DELETE
 CREATE OR REPLACE FUNCTION notify_machine_deletion()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Notify the backend about the machine deletion
     PERFORM pg_notify('machine_delete', json_build_object(
         'id', OLD.id,
         'name', OLD.name
@@ -115,7 +110,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger for machine DELETE
 CREATE TRIGGER delete_machine
 AFTER DELETE ON machine
 FOR EACH ROW
