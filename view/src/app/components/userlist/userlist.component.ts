@@ -1,6 +1,7 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-userlist',
@@ -10,10 +11,11 @@ import { Router } from '@angular/router';
   styleUrl: './userlist.component.scss'
 })
 export class UserlistComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor(private router: Router,private userservice: UserService) { }
   users: any[] = [];
-
+user:any;
   async ngOnInit(): Promise<void> {
+    this.user=await this.userservice.getUser()
     const res = await fetch('http://localhost:3000/getAllUsres', {
         method: 'GET',
         headers: {
@@ -36,6 +38,7 @@ export class UserlistComponent implements OnInit {
         user.urlphoto = 'images/defProfile.jpg';
       }
     })
+  this.users=this.users.filter(u=>u.id!=this.user.id);
   }
 
     toggleEdit(userId: number) {

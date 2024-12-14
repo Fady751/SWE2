@@ -73,7 +73,7 @@ export class MachinelistComponent implements OnInit {
     }
   }
   async sortMachineMaterial(id: number) {
-    if (confirm('did you want to sort this machine?')) {
+    if (confirm('do you want to sort this machine?')) {
       const res = await fetch(`http://localhost:3000/sortMachine`, {
         method: 'PATCH',
         headers: {

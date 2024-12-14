@@ -115,7 +115,7 @@ app.use('/sortMachine' , require('./Routers/Machine/sortMachine'));
             console.error('Error updating machine states:', error);
         }
     }, 1 * 60000);
-})()
+})
 
 
 app.listen(port, host, async(err) => {

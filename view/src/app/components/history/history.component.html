@@ -13,7 +13,7 @@
       <ng-container *ngFor="let order of orders">
         <tr (click)="toggleDetails(order.id)" [class.selected-row]="expandedOrderId === order.id">
           <td>{{ order.id }}</td>
-          <td>{{ order.machineName }}</td>
+          <td>{{ order.machinename }}</td>
           <td [style]="order.status? 'color: green': 'color: red'">{{ order.status? 'Confirmed': 'Not confirmed yet' }}</td>
         </tr>
         <tr *ngIf="expandedOrderId === order.id" class="details-row">
