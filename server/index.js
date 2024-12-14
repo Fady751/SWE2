@@ -114,7 +114,7 @@ app.use('/sortMachine' , require('./Routers/Machine/sortMachine'));
         } catch (error) {
             console.error('Error updating machine states:', error);
         }
-    }, 2.5 * 60000);
+    }, 1 * 60000);
 })()
 
 

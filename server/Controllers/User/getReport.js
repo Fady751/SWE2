@@ -25,11 +25,11 @@ try {
         return res.status(404).json({message: "machine not found."});
 
     if(last_report.length > 0) {
+        await query(`INSERT INTO notification(user_id, machine_id, content)
+            VALUES(${user.id}, ${MachineId}, '${last_report[0].content}')`)
         notification.clients.forEach(async(cl) => {
             if(cl.userID == user.id){
-                await query(`INSERT INTO notification(user_id, machine_id, content)
-                    VALUES(${user.id}, ${MachineId}, '${last_report[0].content}')`)
-                return cl.send(last_report[0].content);
+                cl.send(last_report[0].content);
             }
         });
         return res.status(200).json({message: "done"})
@@ -64,12 +64,12 @@ try {
     });
 
     let check = false
+    await query(`INSERT INTO notification(user_id, machine_id, content)
+        VALUES(${user.id}, ${MachineId}, 'Your report is being prepared.')`)
     notification.clients.forEach( async(cl) => {
       if(cl.userID == user.id){
         check = true
-        await query(`INSERT INTO notification(user_id, machine_id, content)
-            VALUES(${user.id}, ${MachineId}, 'Your report is being prepared.')`)
-        return cl.send(`Your report is being prepared.`);
+        cl.send(`Your report is being prepared.`);
       }
     });
     if(!check) {
@@ -114,13 +114,13 @@ try {
         }
 
         
+        await query(`INSERT INTO last_report(machine_id, content)
+            VALUES(${MachineId}, '${content}')`);
+        await query(`INSERT INTO notification(user_id, machine_id, content)
+            VALUES(${user.id}, ${MachineId}, '${content}')`)
         notification.clients.forEach(async(cl) => {
-            if(cl.userID == user.id){
-                await query(`INSERT INTO last_report(machine_id, content)
-                    VALUES(${MachineId}, '${content}')`);
-                await query(`INSERT INTO notification(user_id, machine_id, content)
-                    VALUES(${user.id}, ${MachineId}, '${content}')`)
-            return cl.send(content);
+            if(cl.userID == user.id) {
+                cl.send(content);
             }
         });
     }, 30000);

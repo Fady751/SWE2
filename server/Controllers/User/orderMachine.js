@@ -73,7 +73,7 @@ const OrderMachine = async (req, res) => {
         notification.clients.forEach( cl => {
           if(cl.userID == user.id){
             check = 1 
-            return cl.send(content);
+            cl.send(content);
           }
         });
 
@@ -99,7 +99,7 @@ const OrderMachine = async (req, res) => {
             await query(`INSERT INTO notification(user_id, machine_id, content) VALUES(${user.id}, ${nearestMachine.id}, '${content2}')`);
             notification.clients.forEach( cl => {
               if(cl.userID == user.id){
-                return cl.send(content2);
+                cl.send(content2);
               }
             });
             clearInterval(interval);
